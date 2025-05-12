@@ -1,0 +1,8 @@
+PRJ_TYPE	INDEX	TITLE	TH	HL
+eWES	targetMeanDepth	Mean Depth Target region	1000	high
+eWES	exomeMeanDepth	Mean Depth Exome region	300	high
+eWES	uniform	Uniformity of Coverage	70	high
+eWES	pctTargetCoverage100X	Coverage 100X Rate	90	high
+WTS	total_reads_trimmed	Total Reads Trimmed	40000000	high
+WTS	uniquely_mapped_reads_rate	Uniquely Mapped Reads rate	80	high
+WTS	chimeric_reads_rate	Chimeric Read rate	5	low

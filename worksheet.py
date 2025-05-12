@@ -17,6 +17,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Multi-command script"
     )
+    parser.add_argument('--version','-v', action='version', version='%(prog)s v3.0.0')
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     # create worksheet

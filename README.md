@@ -7,7 +7,7 @@ DRY工程作業で使用するワークシートの新規作成、シートの�
 ```
 singularity exec --disable-cache --bind /data1 /data1/labTools/labTools.sif python /data1/labTools/worksheet/latest/worksheet.py $@
 ```
-helpページの表示を行い、エイリアスの設定を確認する。
+helpページを表示してエイリアスの設定を確認する。
 ```
 worksheet -h
 usage: worksheet.py [-h] {create,CR,check,CH,addition,ADD} ...
@@ -45,6 +45,12 @@ optional arguments:
   --outdir OUTDIR, -o OUTDIR
                         output directory path (default: /data1/work/workSheet)
 ```
+| option         | 概要           |default         |
+|:---------------|:---------------|:---------------|
+|--flowcellid/-fc |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字 |None|
+|--directory/-d   |解析フォルダの親ディレクトリへのパス|/data1/data/result|
+|--project_type/-t|解析種別。bath,eWES,WTSから選択する。|both|
+|--outdir/-o      |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet|
 
 ## 2\. 解析の進捗を確認
 ```
@@ -69,6 +75,13 @@ optional arguments:
   --novadir NOVADIR, -n NOVADIR
                         novaseq directory (default: /data1/gxduser/novaseqx)
 ```
+| option         | 概要           |default         |
+|:---------------|:---------------|:---------------|
+|--flowcellid/-fc |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字 |None|
+|--directory/-d   |解析フォルダの親ディレクトリへのパス|/data1/data/result|
+|--project_type/-t|解析種別。bath,eWES,WTSから選択する。|both|
+|--linkDir/-l     |PDFレポートのリンク先ディレクトリへのパス|/data1/work/report|
+|--novadir/-n     |NGSデータ転送先フォルダ|/data1/gxduser/novaseqx|
 
 ## 3\. シートの追加
 ```
@@ -91,3 +104,9 @@ optional arguments:
   --outdir OUTDIR, -o OUTDIR
                         output directory path (default: /data1/work/workSheet)
 ```
+| option         | 概要           |default         |
+|:---------------|:---------------|:---------------|
+|--flowcellid/-fc |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字 |None|
+|--directory/-d   |解析フォルダの親ディレクトリへのパス|/data1/data/result|
+|--project_type/-t|解析種別。bath,eWES,WTSから選択する。|both|
+|--outdir/-o      |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet|

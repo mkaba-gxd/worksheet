@@ -43,7 +43,7 @@ def create_worksheet(args):
             print('PRJ_TYPE error:' + item['PRJ_TYPE'] )
             continue
 
-        tempfile = os.path.join(os.path.dirname(__file__).parent.parent, 'templete', 'templete.'+item['PRJ_TYPE']+'.xlsx')
+        tempfile = os.path.join(Path(os.path.abspath(__file__)).parent.parent, 'templete', 'templete.'+item['PRJ_TYPE']+'.xlsx')
         if not os.path.isfile(tempfile) :
             print('Template file not found: ' + tempfile)
             continue

@@ -10,17 +10,18 @@ singularity exec --disable-cache --bind /data1 /data1/labTools/labTools.sif pyth
 ```
 helpページを表示してエイリアスの設定を確認する。以下が表示されればOK。
 ```
-worksheet --help
+$ worksheet --help
 version: v3.0.0
-usage: worksheet.py [-h] {create,CR,check,CH,addition,ADD} ...
+usage: worksheet.py [-h] [--version] {create,CR,check,CH,addition,ADD,reset,RE} ...
 
 Created and added worksheet and checked processes.
 
 positional arguments:
-  {create,CR,check,CH,addition,ADD}
+  {create,CR,check,CH,addition,ADD,reset,RE}
     create (CR)         create worksheet
     check (CH)          check progress
     addition (ADD)      additional worksheet
+    reset (RE)          reset database
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -35,6 +36,7 @@ worksheet CR -fc <flowcellid>
 オプションの詳細
 ```
 $ worksheet create -h
+version: v3.0.0
 usage: worksheet.py create [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}] [--outdir OUTDIR]
 
 optional arguments:
@@ -63,6 +65,7 @@ worksheet CH -fc <flowcellid>
 オプションの詳細
 ```
 $ worksheet check -h
+version: v3.0.0
 usage: worksheet.py check [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}] [--linkDir LINKDIR] [--novadir NOVADIR]
 
 optional arguments:
@@ -94,6 +97,7 @@ worksheet ADD -fc <flowcellid>
 オプションの詳細
 ```
 $ worksheet addition -h
+usage: version: v3.0.0
 usage: worksheet.py addition [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}] [--outdir OUTDIR]
 
 optional arguments:
@@ -113,3 +117,32 @@ optional arguments:
 |--directory/-d   |解析フォルダの親ディレクトリへのパス|/data1/data/result|
 |--project_type/-t|解析種別。bath,eWES,WTSから選択する。|both|
 |--outdir/-o      |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet|
+
+## 4\. データベースのリセット
+指定された SampleID について、データベースに登録された解析結果を削除し、解析フォルダにPDF/JSONが存在する場合はリネームする。\
+--roll_back オプションで解析ステータスを101(解析中)に変更する。\
+指定がない場合は100(解析前)に変更するのでcronによる再解析が行われる。
+```
+worksheet reset --sample <sampleid> (--roll_back)
+worksheet RE -s <sampleid> (--roll_back)
+```
+オプションの詳細
+```
+$ worksheet reset -h
+usage: version: v3.0.0
+worksheet.py reset [-h] --sample SAMPLE [--roll_back] [--analysis_dir ANALYSIS_DIR]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --sample SAMPLE, -s SAMPLE
+                        sample id (default: None)
+  --roll_back, -r       Set the status to 101 (Analysis in progress). If not specified, set the status to 100 (ready for analysis).
+  --analysis_dir ANALYSIS_DIR, -d ANALYSIS_DIR
+                        parent analytical directory (default: /data1/data/result)
+```
+| option           | 概要           |default         |
+|:-----------------|:---------------|:---------------|
+|--sample/-s       |sample ID       |None |
+|--roll_back/-r    |analysis statusを「解析中」にセットする|解析前|
+|--analysis_dir/-d |解析フォルダの親ディレクトリへのパス|/data1/data/result|
+

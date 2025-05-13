@@ -10,7 +10,8 @@ singularity exec --disable-cache --bind /data1 /data1/labTools/labTools.sif pyth
 ```
 helpページを表示してエイリアスの設定を確認する。以下が表示されればOK。
 ```
-worksheet -h
+worksheet --help
+version: v3.0.0
 usage: worksheet.py [-h] {create,CR,check,CH,addition,ADD} ...
 
 Created and added worksheet and checked processes.
@@ -23,6 +24,7 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
+  --version, -v         show program's version number and exit
 ```
 
 ## 1\. ワークシートの作成

@@ -4,6 +4,14 @@ import argparse
 from pathlib import Path
 from modules import *
 
+VERSION = "v3.0.0"
+
+class CustomHelpFormatter(argparse.HelpFormatter):
+    def add_usage(self, usage, actions, groups, prefix=None):
+        version_info = f"version: {VERSION}\n"
+        self._add_item(lambda: version_info, [])
+        super().add_usage(usage, actions, groups, prefix)
+
 def run_create(args):
     create_worksheet(args)
 
@@ -15,9 +23,10 @@ def run_add(args):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Created and added worksheet and checked processes."
+        description="Created and added worksheet and checked processes.",
+        formatter_class=CustomHelpFormatter
     )
-    parser.add_argument('--version','-v', action='version', version='%(prog)s v3.0.0')
+    parser.add_argument('--version','-v', action='version', version=f'%(prog)s {VERSION}')
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     # create worksheet

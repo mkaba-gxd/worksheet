@@ -6,11 +6,6 @@ from modules import *
 
 VERSION = "v3.0.0"
 
-class CustomHelpFormatter(argparse.HelpFormatter):
-    def format_help(self):
-        version_info = f"version: {VERSION}\n"
-        return version_info + super().format_help()
-
 def run_create(args):
     create_worksheet(args)
 
@@ -25,15 +20,17 @@ def run_reset(args):
 
 def main():
 
+    if '--help' in sys.argv or '-h' in sys.argv:
+        print(f"version: {VERSION}")
+
     parser = argparse.ArgumentParser(
-        description="Created and added worksheet and checked processes.",
-        formatter_class=CustomHelpFormatter
+        description="Created and added worksheet and checked processes."
     )
     parser.add_argument('--version','-v', action='version', version=f'%(prog)s {VERSION}')
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     # create worksheet
-    parser_cr = subparsers.add_parser("create", aliases=['CR'], help="create worksheet", formatter_class=CustomHelpFormatter)
+    parser_cr = subparsers.add_parser("create", aliases=['CR'], help="create worksheet")
     parser_cr.add_argument("--flowcellid","-fc", required=True, help="flowcell id")
     parser_cr.add_argument("--directory","-d", required=False, help="parent analytical directory", default="/data1/data/result")
     parser_cr.add_argument("--project_type","-t", required=False, help="project type", default="both", choices=["both","WTS","eWES"])
@@ -41,7 +38,7 @@ def main():
     parser_cr.set_defaults(func=run_create)
 
     # check analysis
-    parser_ch = subparsers.add_parser("check", aliases=['CH'], help="check progress", formatter_class=CustomHelpFormatter)
+    parser_ch = subparsers.add_parser("check", aliases=['CH'], help="check progress")
     parser_ch.add_argument("--flowcellid","-fc", required=True, help="flowcell id")
     parser_ch.add_argument("--directory","-d", required=False, help="parent analytical directory", default="/data1/data/result")
     parser_ch.add_argument("--project_type","-t", required=False, help="project type", default="both", choices=["both","WTS","eWES"])
@@ -50,7 +47,7 @@ def main():
     parser_ch.set_defaults(func=run_check)
 
     # additional worksheet
-    parser_ad = subparsers.add_parser("addition", aliases=['ADD'], help="additional worksheet", formatter_class=CustomHelpFormatter)
+    parser_ad = subparsers.add_parser("addition", aliases=['ADD'], help="additional worksheet")
     parser_ad.add_argument("--flowcellid","-fc", required=True, help="flowcell id")
     parser_ad.add_argument("--directory","-d", required=False, help="parent analytical directory", default="/data1/data/result")
     parser_ad.add_argument("--project_type","-t", required=False, help="project type", default="both", choices=["both","WTS","eWES"])
@@ -58,7 +55,7 @@ def main():
     parser_ad.set_defaults(func=run_add)
 
     # reset database
-    parser_re = subparsers.add_parser("reset", aliases=['RE'], help="reset database", formatter_class=CustomHelpFormatter)
+    parser_re = subparsers.add_parser("reset", aliases=['RE'], help="reset database")
     parser_re.add_argument("--sample","-s", required=True, help="sample id")
     parser_re.add_argument("--roll_back","-r", required=False, help='Set the status to 101 (Analysis in progress). If not specified, set the status to 100 (ready for analysis).', action='store_false')
     parser_re.add_argument("--analysis_dir","-d", required=False, help="parent analytical directory", default="/data1/data/result")

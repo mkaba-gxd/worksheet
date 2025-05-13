@@ -97,7 +97,7 @@ worksheet ADD -fc <flowcellid>
 オプションの詳細
 ```
 $ worksheet addition -h
-usage: version: v3.0.0
+version: v3.0.0
 usage: worksheet.py addition [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}] [--outdir OUTDIR]
 
 optional arguments:
@@ -129,8 +129,8 @@ worksheet RE -s <sampleid> (--roll_back)
 オプションの詳細
 ```
 $ worksheet reset -h
-usage: version: v3.0.0
-worksheet.py reset [-h] --sample SAMPLE [--roll_back] [--analysis_dir ANALYSIS_DIR]
+version: v3.0.0
+usage: worksheet.py reset [-h] --sample SAMPLE [--roll_back] [--analysis_dir ANALYSIS_DIR]
 
 optional arguments:
   -h, --help            show this help message and exit

@@ -3,16 +3,17 @@ DRY工程作業で使用するワークシートの新規作成、シートの�
 
 ## 0\. 準備
 エイリアスを作成する（初回のみ）。\
-~/bin フォルダを作成し、以下のコマンドを記載したテキストファイル worksheet を作成しておく。
+~/bin フォルダを作成し、以下のコマンドを記載したテキストファイル worksheet を作成しておく。\
+エイリアスを作成しない場合は、singularity でコンテナを指定して実行する。
 ```
 singularity exec --disable-cache --bind /data1 /data1/labTools/labTools.sif python /data1/labTools/worksheet/latest/worksheet.py $@
 ```
-helpページを表示してエイリアスの設定を確認する。
+helpページを表示してエイリアスの設定を確認する。以下が表示されればOK。
 ```
 worksheet -h
 usage: worksheet.py [-h] {create,CR,check,CH,addition,ADD} ...
 
-Multi-command script
+Created and added worksheet and checked processes.
 
 positional arguments:
   {create,CR,check,CH,addition,ADD}

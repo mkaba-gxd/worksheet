@@ -3,6 +3,7 @@ from .additional_worksheet import *
 from .create_worksheet import *
 from .check_progress import *
 from .reset_db import *
+from .remove_data import *
 
 __all__ = [
     "getinfo",
@@ -12,6 +13,7 @@ __all__ = [
     "create_worksheet",
     "check_progress",
     "additional_worksheet",
-    "reset_db"
+    "reset_db",
+    "remove_data"
     ]
 

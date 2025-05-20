@@ -15,6 +15,9 @@ def run_check(args):
 def run_add(args):
     additional_worksheet(args)
 
+def run_remove(args):
+    remove_data(args)
+
 def run_reset(args):
     reset_db(args)
 
@@ -53,6 +56,13 @@ def main():
     parser_ad.add_argument("--project_type","-t", required=False, help="project type", default="both", choices=["both","WTS","eWES"])
     parser_ad.add_argument("--outdir","-o", required=False, help="output directory path", default="/data1/work/workSheet")
     parser_ad.set_defaults(func=run_add)
+
+    # Edit (delete) the analysis results.
+    parser_rm = subparsers.add_parser("remove", aliases=['RM'], help="delete the analysis results", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser_rm.add_argument("--sample","-s", required=True, help="sample id")
+#    parser_rm.add_argument("--item","-i", required=True, help="Item to be edited", choices=["SNV","FS","AS"])
+    parser_rm.add_argument("--analysis_dir","-d", required=False, help="parent analytical directory", default="/data1/data/result")
+    parser_rm.set_defaults(func=run_remove)
 
     # reset database
     parser_re = subparsers.add_parser("reset", aliases=['RE'], help="reset database", formatter_class=argparse.ArgumentDefaultsHelpFormatter)

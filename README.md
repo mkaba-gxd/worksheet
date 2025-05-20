@@ -12,15 +12,16 @@ helpページを表示してエイリアスの設定を確認する。以下が�
 ```
 $ worksheet --help
 version: v3.0.0
-usage: worksheet.py [-h] [--version] {create,CR,check,CH,addition,ADD,reset,RE} ...
+usage: worksheet.py [-h] [--version] {create,CR,check,CH,addition,ADD,remove,RM,reset,RE} ...
 
 Created and added worksheet and checked processes.
 
 positional arguments:
-  {create,CR,check,CH,addition,ADD,reset,RE}
+  {create,CR,check,CH,addition,ADD,remove,RM,reset,RE}
     create (CR)         create worksheet
     check (CH)          check progress
     addition (ADD)      additional worksheet
+    remove (RM)         delete the analysis results
     reset (RE)          reset database
 
 optional arguments:
@@ -118,7 +119,31 @@ optional arguments:
 |--project_type/-t|解析種別。bath,eWES,WTSから選択する。|both|
 |--outdir/-o      |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet|
 
-## 4\. データベースのリセット
+## 4\. 解析結果の削除
+指定された SampleID について、解析フォルダに格納されているsummaryファイルの不要な行を削除する。
+```
+worksheet remove --sample SAMPLE
+worksheet RM -s <sampleid>
+```
+オプションの詳細
+```
+$ worksheet remove -h
+version: v3.0.0
+usage: worksheet.py remove [-h] --sample SAMPLE [--analysis_dir ANALYSIS_DIR]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --sample SAMPLE, -s SAMPLE
+                        sample id (default: None)
+  --analysis_dir ANALYSIS_DIR, -d ANALYSIS_DIR
+                        parent analytical directory (default: /data1/data/result)
+```
+| option           | 概要           |default         |
+|:-----------------|:---------------|:---------------|
+|--sample/-s       |sample ID       |None |
+|--analysis_dir/-d |解析フォルダの親ディレクトリへのパス|/data1/data/result|
+
+## 5\. データベースのリセット
 指定された SampleID について、データベースに登録された解析結果を削除し、解析フォルダにPDF/JSONが存在する場合はリネームする。\
 --roll_back オプションで解析ステータスを101(解析中)に変更する。\
 指定がない場合は100(解析前)に変更するのでcronによる再解析が行われる。

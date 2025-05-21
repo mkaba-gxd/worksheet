@@ -67,7 +67,7 @@ def main():
     # reset database
     parser_re = subparsers.add_parser("reset", aliases=['RE'], help="reset database", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser_re.add_argument("--sample","-s", required=True, help="sample id")
-    parser_re.add_argument("--roll_back","-r", required=False, help='Set the status to 101 (Analysis in progress). If not specified, set the status to 100 (ready for analysis).', action='store_false')
+    parser_re.add_argument("--status","-t", required=False, help='Specify the analysis status. If not changed, not specified.', default=None, choices=['100','101','102',None])
     parser_re.add_argument("--analysis_dir","-d", required=False, help="parent analytical directory", default="/data1/data/result")
     parser_re.set_defaults(func=run_reset)
 

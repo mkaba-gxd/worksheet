@@ -147,8 +147,9 @@ optional arguments:
 
 ## 5\. データベースのリセット
 指定された SampleID について、データベースに登録された解析結果を削除し、解析フォルダにPDF/JSONが存在する場合はリネームする。\
---roll_back オプションで解析ステータスを101(解析中)に変更する。\
-指定がない場合は100(解析前)に変更するのでcronによる再解析が行われる。
+--status オプションで解析ステータスを変更する。 100:解析前, 101:解析中, 102:解析完了 \
+指定しない場合は解析ステータスは変更しない。\
+100を指定した場合はcronによる再解析が行われる。
 ```
 worksheet reset --sample <sampleid> (--roll_back)
 worksheet RE -s <sampleid> (--roll_back)
@@ -157,19 +158,20 @@ worksheet RE -s <sampleid> (--roll_back)
 ```
 $ worksheet reset -h
 version: v3.0.0
-usage: worksheet.py reset [-h] --sample SAMPLE [--roll_back] [--analysis_dir ANALYSIS_DIR]
+usage: worksheet.py reset [-h] --sample SAMPLE [--status {100,101,102,None}] [--analysis_dir ANALYSIS_DIR]
 
 optional arguments:
   -h, --help            show this help message and exit
   --sample SAMPLE, -s SAMPLE
                         sample id (default: None)
-  --roll_back, -r       Set the status to 101 (Analysis in progress). If not specified, set the status to 100 (ready for analysis).
+  --status {100,101,102,None}, -t {100,101,102,None}
+                        Specify the analysis status. If not changed, not specified. (default: None)
   --analysis_dir ANALYSIS_DIR, -d ANALYSIS_DIR
                         parent analytical directory (default: /data1/data/result)
 ```
 | option           | 概要           |default         |
 |:-----------------|:---------------|:---------------|
 |--sample/-s       |sample ID       |None |
-|--roll_back/-r    |analysis statusを「解析中」にセットする|解析前|
+|--status/-t       |analysis status を指定する。100:解析前, 101:解析中, 102:解析完了, None(オプションなし):変更しない |None|
 |--analysis_dir/-d |解析フォルダの親ディレクトリへのパス|/data1/data/result|
 

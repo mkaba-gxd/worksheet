@@ -7,7 +7,8 @@ import pandas as pd
 from pathlib import Path
 from .commom import *
 
-def reset_ewes(sample, flag):
+def reset_ewes(sample, status):
+
     try :
         connection = pymysql.connect(host="192.168.9.100", user="gxd_pipeline", password="gw!2341234", database="gxd")
         connection.autocommit(False)
@@ -19,14 +20,14 @@ def reset_ewes(sample, flag):
                 cursor.execute(del_alt_msi(sample))
                 cursor.execute(del_alt_tmb(sample))
                 cursor.execute(del_qc(sample))
-                if flag:
-                    cursor.execute(upd_history_1(sample, '100'))
-                    cursor.execute(upd_history_2(sample, '100'))
-                    print('update status:100')
+
+                if status is None :
+                    print('No change in status.')
                 else :
-                    cursor.execute(upd_history_1(sample, '101'))
-                    cursor.execute(upd_history_2(sample, '101'))
-                    print('update status:101')
+                    cursor.execute(upd_history_1(sample, status))
+                    cursor.execute(upd_history_2(sample, status))
+                    print('update status: ' + status)
+
                 connection.commit()
 
         except pymysql.MySQLError as e:
@@ -44,7 +45,8 @@ def reset_ewes(sample, flag):
     except Exception as e:
         print(f"unexpected error: {e}")
 
-def reset_wts(sample, flag):
+def reset_wts(sample, status):
+
     try :
         connection = pymysql.connect(host="192.168.9.100", user="gxd_pipeline", password="gw!2341234", database="gxd")
         connection.autocommit(False)
@@ -54,15 +56,16 @@ def reset_wts(sample, flag):
                 cursor.execute(del_alt_sv(sample))
                 cursor.execute(del_alt_express(sample))
                 cursor.execute(del_qc(sample))
-                if flag :
-                    cursor.execute(upd_history_1(sample, '100'))
-                    cursor.execute(upd_history_2(sample, '100'))
-                    print('update status:100')
+
+                if status is None :
+                    print('No change in status.')
                 else :
-                    cursor.execute(upd_history_1(sample, '101'))
-                    cursor.execute(upd_history_2(sample, '101'))
-                    print('update status:101')
+                    cursor.execute(upd_history_1(sample, status))
+                    cursor.execute(upd_history_2(sample, status))
+                    print('update status: ' + status)
+
                 connection.commit()
+
         except pymysql.MySQLError as e:
             print(f"database error: {e}")
             connection.rollback()
@@ -174,12 +177,14 @@ def reset_db(args):
 
     sample = args.sample
     anal_dir = args.analysis_dir
-    status = args.roll_back
+    status = args.status
+
+    if (status is not None) and (status not in ['100','101','102']) :
+        init('Input value error. Check the status option.')
 
     subDir, anal_type = getbatch(sample, anal_dir)
     if subDir is None :
-        print('No registration in database')
-        sys.exit()
+        init('No registration in database')
 
     pdf = os.path.join(anal_dir, anal_type, subDir, sample, 'Summary', sample+'.report.pdf')
     json = os.path.join(anal_dir, anal_type, subDir, sample, 'Summary', sample+'.report.json')

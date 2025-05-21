@@ -1,5 +1,6 @@
 import os
 import sys
+import glob
 import shutil
 import subprocess
 import pandas as pd
@@ -15,7 +16,7 @@ def prompt_choice(prompt, choices):
 def generate_backup_path(file_path):
     base, ext = os.path.splitext(file_path)
     counter = 1
-    backup_path = f"{base}.BK{ext}"
+    backup_path = f"{base}.original{ext}"
     while os.path.exists(backup_path):
         backup_path = f"{base}.BK_{counter}{ext}"
         counter += 1
@@ -35,10 +36,53 @@ def confirm_diff_and_report(original, backup, removed_count):
     except Exception as e:
         print(f"Could not run diff: {e}")
 
-def handle_snv(file_path):
+def create_rerun_bash(anaDir, sample) :
+
+    logDir = os.path.join(anaDir, 'Logs')
+    if not os.path.isdir(logDir) :
+        print('Logs folder is not exist. rerun.sh has not been created.')
+        return
+
+    pattern = os.path.join(logDir, '*report_json*.err')
+    files = glob.glob(pattern)
+    if not files:
+        print('report_json log file is not exist. rerun.sh has not been created.')
+        return
+
+    latest_file = max(files, key=os.path.getmtime)
+    rerun_bash = os.path.join(anaDir, 'rerun.sh')
+
+    cmd, img = None, None
+    with open(latest_file, 'r') as err:
+        for line in err :
+            line = line.strip()
+            if line.startswith("python3"):
+                cmd = line
+            elif "Activating singularity image" in line and ".sif" in line:
+                parts = line.split()
+                for part in parts:
+                    if part.endswith(".sif"):
+                        img = part
+
+    if cmd is None or img is None:
+        print('There is a problem with the log file. rerun.sh has not been created.')
+        return
+
+    singularity_cmd = f"singularity exec --bind /data1 {img} {cmd}"
+    with open(rerun_bash, 'w') as bash:
+        bash.write(singularity_cmd + '\n')
+
+    print('rerun.sh was created.')
+
+
+def handle_snv(file_path, anaDir, sample):
 
     data = pd.read_csv(file_path, sep='\t', dtype=str, keep_default_na=False, na_values=[])
     deleted_rows = 0
+
+    if data.shape[0] == 0 :
+        print('No SNV detected.')
+        return
 
     while True:
         ans = input("What mutations to delete?[gene,HGVSc,HGVSp]: ").strip().split(',')
@@ -77,11 +121,16 @@ def handle_snv(file_path):
     if deleted_rows > 0:
         backup = backup_and_write_file(file_path, data)
         confirm_diff_and_report(file_path, backup, deleted_rows)
+        create_rerun_bash(anaDir, sample)
 
-def handle_cnv(file_path):
+def handle_cnv(file_path, anaDir, sample):
 
     data = pd.read_csv(file_path, sep='\t', dtype=str, keep_default_na=False, na_values=[])
     deleted_rows = 0
+
+    if data.shape[0] == 0 :
+        print('No CNV detected.')
+        return
 
     while True:
         gene = input("What Copy Number to delete?[gene]: ").strip()
@@ -109,11 +158,16 @@ def handle_cnv(file_path):
     if deleted_rows > 0:
         backup = backup_and_write_file(file_path, data)
         confirm_diff_and_report(file_path, backup, deleted_rows)
+        create_rerun_bash(anaDir, sample)
 
-def handle_fusion(file_path):
+def handle_fusion(file_path, anaDir, sample):
 
     data = pd.read_csv(file_path, sep='\t', dtype=str, keep_default_na=False, na_values=[])
     deleted_rows = 0
+
+    if data.shape[0] == 0 :
+        print('No fusion detected.')
+        return
 
     while True:
         ans = input("What fusions to delete?[gene_1,gene_2,breakpoint_1(chr:position),breakpoint_2(chr:position)]. ").strip().split(',')
@@ -158,16 +212,19 @@ def handle_fusion(file_path):
     if deleted_rows > 0:
         backup = backup_and_write_file(file_path, data)
         confirm_diff_and_report(file_path, backup, deleted_rows)
+        create_rerun_bash(anaDir, sample)
 
-def handle_splice(file_path):
+def handle_splice(file_path, anaDir, sample):
 
     data = pd.read_csv(file_path, sep='\t', dtype=str, keep_default_na=False, na_values=[])
     deleted_rows = 0
 
-    data = data.dropna(subset=['ONCOGENICITY'])
-    if data.shape[0] == 0 :
+    detect = data[ data['ONCOGENICITY'] != '' ]
+    if detect.shape[0] == 0 :
         print('No Alternative Splicing detected.')
         return
+    else :
+        print(','.join(detect['spliceName']) + ' are detected.')
 
     del_cols = data.columns.to_list()
     del_cols.remove('spliceName')
@@ -176,28 +233,25 @@ def handle_splice(file_path):
 
         ans = input("What splices to delete?[EGFR,MET,AR]: ").strip().split(',')
 
-        diff = list(set(ans) - set(['EGFR','MET','AR']))
-        if len(diff) > 0 :
-            print("Invalid input. " + ','.join(diff) + ' is not included in the inspection.')
-            continue
-
         delete_id = []
         if 'EGFR' in ans : delete_id.append('EGFR vIII')
         if 'MET' in ans : delete_id.append('MET exon 14 skipping')
-        if 'MET' in ans : delete_id.append('AR-V7')
+        if 'AR' in ans : delete_id.append('AR-V7')
 
-        if len(diff) > 0 :
-            print("Invalid input. " + ','.join(diff) + ' is not included in the inspection.')
-            continue
-        elif len(delete_id) == 0 :
+        diff = set(delete_id) - set(detect['spliceName'].to_list())
+        if (len(delete_id) == 0) or (len(diff) > 0) :
             print("Invalid input. Check input values: " + ','.join(ans))
-            continue
+            choice = prompt_choice("Continue or quit? (continue[C]/quit[Q]): ", ['continue', 'c', 'quit', 'q'])
+            if choice in ['quit', 'q']:
+                break
+            else:
+                continue
 
         match = data[ data['spliceName'].isin(delete_id) ]
         print(match[['spliceName','discordant_mates','canonical_reads','ratio','tpm_total','tpm_variant']])
         confirm = prompt_choice("Do you want to remove these? (yes[Y]/no[N]): ", ['yes', 'y', 'no', 'n'])
         if confirm in ['yes', 'y']:
-            data[ match.index, del_cols ] = ''
+            data.loc[ match.index, del_cols ] = ''
             deleted_rows += match.shape[0]
 
         choice = prompt_choice("Continue or quit? (continue[C]/quit[Q]): ", ['continue', 'c', 'quit', 'q'])
@@ -207,11 +261,12 @@ def handle_splice(file_path):
     if deleted_rows > 0:
         backup = backup_and_write_file(file_path, data)
         confirm_diff_and_report(file_path, backup, deleted_rows)
+        create_rerun_bash(anaDir, sample)
 
-def remove_ewes(sample, smDir):
+def remove_ewes(sample, anaDir):
 
-    FAIL_S = os.path.join(smDir, sample + '.summarized.snv.target.tsv')
-    FAIL_C = os.path.join(smDir, sample + '.summarized.cnv.exome.tsv')
+    FAIL_S = os.path.join(anaDir, 'Summary', sample + '.summarized.snv.target.tsv')
+    FAIL_C = os.path.join(anaDir, 'Summary', sample + '.summarized.cnv.exome.tsv')
 
     if not os.path.isfile(FAIL_S):
         init("SNV file does not exist: {FAIL_S}")
@@ -221,10 +276,10 @@ def remove_ewes(sample, smDir):
     while True:
         target = input("Which item(s) would you like to modify? [SNV/CNV/quit[Q]]: ").strip().lower()
         if target == 'snv':
-            handle_snv(FAIL_S)
+            handle_snv(FAIL_S, anaDir, sample)
             break
         elif target == 'cnv':
-            handle_cnv(FAIL_C)
+            handle_cnv(FAIL_C, anaDir, sample)
             break
         elif target in ['quit', 'q']:
             break
@@ -232,10 +287,10 @@ def remove_ewes(sample, smDir):
             print("Invalid input. Please enter 'SNV' or 'CNV' or 'quit(Q)'.")
 
 
-def remove_wts(sample, smDir):
+def remove_wts(sample, anaDir):
 
-    FAIL_F = os.path.join(smDir, sample + '.summarized.fusion.tsv')
-    FAIL_A = os.path.join(smDir, sample + '.summarized.splice.tsv')
+    FAIL_F = os.path.join(anaDir, 'Summary', sample + '.summarized.fusion.tsv')
+    FAIL_A = os.path.join(anaDir, 'Summary', sample + '.summarized.splice.tsv')
 
     if not os.path.isfile(FAIL_F):
         init("fusion file does not exist: {FAIL_F}")
@@ -245,10 +300,10 @@ def remove_wts(sample, smDir):
     while True:
         target = input("Which item(s) would you like to modify? [FS/AS/quit[Q]]: ").strip().lower()
         if target == 'fs':
-            handle_fusion(FAIL_F)
+            handle_fusion(FAIL_F, anaDir, sample)
             break
         elif target == 'as':
-            handle_splice(FAIL_A)
+            handle_splice(FAIL_A, anaDir, sample)
             break
         elif target in ['quit', 'q']:
             break
@@ -262,16 +317,16 @@ def remove_data(args):
     anal_dir = args.analysis_dir
 
     subDir, anal_type = getbatch(sample, anal_dir)
-    smDir = os.path.join(anal_dir, anal_type, subDir, sample, 'Summary')
+    anaDir = os.path.join(anal_dir, anal_type, subDir, sample)
 
     if subDir is None :
         init('No registration in database')
-    if not os.path.isdir(smDir) :
+    if not os.path.isdir(os.path.join(anaDir,'Summary')) :
         init('Summary folder not created')
 
     if anal_type == 'eWES' :
-        remove_ewes(sample, smDir)
+        remove_ewes(sample, anaDir)
     elif anal_type == 'WTS' :
-        remove_wts(sample, smDir)
+        remove_wts(sample, anaDir)
 
 

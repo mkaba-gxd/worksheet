@@ -120,7 +120,9 @@ optional arguments:
 |--outdir/-o      |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet|
 
 ## 4\. 解析結果の削除
-指定された SampleID について、解析フォルダに格納されているsummaryファイルの不要な行を削除する。
+指定された SampleID について、解析フォルダに格納されているsummaryファイルの不要な行を削除する。\
+対話型プログラムなので、表示される内容に応じて編集する内容を入力する。\
+解析フォルダ内データの書き換えを行うので gxd_pipeline ユーザーで実行すること。\
 ```
 worksheet remove --sample SAMPLE
 worksheet RM -s <sampleid>

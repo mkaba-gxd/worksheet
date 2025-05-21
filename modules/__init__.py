@@ -6,10 +6,10 @@ from .reset_db import *
 from .remove_data import *
 
 __all__ = [
-    "getinfo",
-    "SelectData",
-    "fcDir_table",
-    "init",
+#    "getinfo",
+#    "SelectData",
+#    "fcDir_table",
+#    "init",
     "create_worksheet",
     "check_progress",
     "additional_worksheet",

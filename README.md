@@ -38,6 +38,8 @@ optional arguments:
 ```
 
 ## 1\. ワークシートの作成
+\<OUTDIR\>にワークシートを作成する。同名のファイルがある場合は上書きするかどうか選択する。\
+\<DIRECTORY\>に解析フォルダが作成されてから実行すること。
 ```
 worksheet create -fc <flowcellid>
 worksheet CR -fc <flowcellid>
@@ -66,7 +68,11 @@ optional arguments:
 |--project_type/-t|解析種別。bath,eWES,WTSから選択する。|both|
 |--outdir/-o      |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet|
 
-## 2\. 解析の進捗を確認
+## 2\. 解析の進捗確認
+rawdataに格納されているSampleSheetの内容と、DBに登録されている検体情報が一致することを確認する。\
+analysis statusを調べて解析の進捗を表示する。\
+report.jsonとreport.pdfが作成されていることを確認する。\
+\<LINKDIR\>に作成済みreport.pdfのシンボリックリンクを作成する。
 ```
 worksheet check -fc <flowcellid>
 worksheet CH -fc <flowcellid>
@@ -99,6 +105,8 @@ optional arguments:
 |--novadir/-n     |NGSデータ転送先フォルダ|/data1/gxduser/novaseqx|
 
 ## 3\. シートの追加
+作成済のワークシートにQC情報を記載したqc_infoシートを追加する。\
+report.jsonが作成済の検体に対し、Summaryフォルダに格納されたsummarized.*.tsvをからレポートに掲載される変異を検査項目ごとにまとめたシートを追加する。
 ```
 worksheet addition -fc <flowcellid>
 worksheet ADD -fc <flowcellid>

@@ -9,6 +9,12 @@ import shutil
 from pathlib import Path
 from .commom import *
 
+def prompt_choice(prompt, choices):
+    while True:
+        ans = input(prompt).strip().lower()
+        if ans in choices:
+            return ans
+
 def create_worksheet(args):
 
     flowcellid = args.flowcellid
@@ -53,6 +59,12 @@ def create_worksheet(args):
         temp_info['CTRL'] = np.where(temp_info['SAMPLE_ID'].str.contains(PC),'PC', np.where(temp_info['SAMPLE_ID'].str.contains(NC),'NC',''))
 
         out_file = os.path.join(outdir, '.'.join([item['seqDir'], item['PRJ_TYPE'],'xlsx']))
+        if os.path.isfile(out_file):
+            choice = prompt_choice(out_file + " is exists. Do you want to overwrite it? (yes[Y]/no[N]): ", ['yes', 'y', 'no', 'n'])
+            if choice in ['no', 'n']:
+                print('Suspend operation.')
+                continue
+
         shutil.copy(tempfile, out_file)
 
         wb = openpyxl.load_workbook(out_file)

@@ -170,8 +170,8 @@ optional arguments:
 |WTS       |FS (Fusion)                |gene_1,gene_2,chr1:position1,chr2:position2 |
 |WTS       |AS (Alternative Splicing)  |[EGFR,MET,AR]  \*カンマ区切りで複数指定可   |
 
-\*Genomic Signatures(MSI/TMB), SNV/InDel with Insufficient Depth は選択付加\
-\*CNV はIntermediateも削除可能
+\*Genomic Signatures(MSI/TMB), SNV/InDel with Insufficient Depth は未対応\
+\*CNV は Intermediate の遺伝子も含めて指定可能
 
 ## 5\. データベースのリセット
 指定された SampleID について、データベースに登録された解析結果を削除し、解析フォルダにPDF/JSONが存在する場合はリネームする。\

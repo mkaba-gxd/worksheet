@@ -164,14 +164,14 @@ optional arguments:
 
 削除できる項目
 |test_type |item                       |指定方法        
-|:---------|:--------------------------|:-------------------------------------------|
-|eWES      |SNV (SNV & InDel)          |gene,HGVSc,HGVSp \*HGVSpが-の場合は空欄     |
-|eWES      |CNV (Copy Number Variants) |gene \*カンマ区切りで複数指定可             |
-|WTS       |FS (Fusion)                |gene_1,gene_2,chr1:position1,chr2:position2 |
-|WTS       |AS (Alternative Splicing)  |[EGFR,MET,AR]  \*カンマ区切りで複数指定可   |
+|:---------|:--------------------------|:---------------------------------------------------|
+|eWES      |SNV (SNV & InDel)          |gene,HGVSc,HGVSp (HGVSpがハイフン "-" の場合は空欄) |
+|eWES      |CNV (Copy Number Variants) |gene1,gene2,... (カンマ区切りで複数指定可)          |
+|WTS       |FS (Fusion)                |gene_1,gene_2,chr1:position1,chr2:position2         |
+|WTS       |AS (Alternative Splicing)  |[EGFR,MET,AR]  (カンマ区切りで複数指定可)           |
 
-\*Genomic Signatures(MSI/TMB), SNV/InDel with Insufficient Depth は未対応\
-\*CNV は Intermediate の遺伝子も含めて指定可能
+\*Genomic Signatures(MSI/TMB), SNV/InDel with Insufficient Depth は未対応。\
+\*CNV は Intermediate の遺伝子も含めて指定可。
 
 ## 5\. データベースのリセット
 指定された SampleID について、データベースに登録された解析結果を削除し、解析フォルダにPDF/JSONが存在する場合はリネームする。\

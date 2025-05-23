@@ -1,10 +1,10 @@
 # worksheet マニュアル
 DRY工程作業で使用するワークシートの新規作成、シートの追加、解析の進捗確認
 
-| command      | 概要                                                   |
-|:-------------|:-------------------------------------------------------|
-|create, CR    |ワークシートの新規作成                                  |
-|check, CH     |解析の進捗確認                                          |
+| command      | 概要                                                |
+|:-------------|:---------------------------------------------------|
+|create, CR    |ワークシートの新規作成                                |
+|check, CH     |解析の進捗確認                                       |
 |addition, ADD |ワークシートに解析情報を記載したシートを追加            |
 |remove, RM    |解析結果の編集(Summaryファイルの行削除)とrerun.shの作成 |
 |reset, RE     |DBに登録された解析結果を削除しanalysis statusを変更する |
@@ -44,7 +44,7 @@ optional arguments:
 worksheet create -fc <flowcellid>
 worksheet CR -fc <flowcellid>
 ```
-オプションの詳細
+### オプションの詳細
 ```
 $ worksheet create -h
 version: v3.0.0
@@ -77,7 +77,7 @@ report.jsonとreport.pdfが作成されていることを確認する。\
 worksheet check -fc <flowcellid>
 worksheet CH -fc <flowcellid>
 ```
-オプションの詳細
+### オプションの詳細
 ```
 $ worksheet check -h
 version: v3.0.0
@@ -112,7 +112,7 @@ optional arguments:
 worksheet addition -fc <flowcellid>
 worksheet ADD -fc <flowcellid>
 ```
-オプションの詳細
+### オプションの詳細
 ```
 $ worksheet addition -h
 version: v3.0.0
@@ -139,12 +139,12 @@ optional arguments:
 ## 4\. 解析結果の削除
 指定された SampleID について、解析フォルダに格納されているsummaryファイルの不要な行を削除する。\
 対話型プログラムなので、表示される内容に応じて編集する内容を入力する。\
-**解析フォルダ内データの書き換えを行うので gxd_pipeline ユーザーで実行すること。**
+解析フォルダ内データの書き換えを行うので **gxd_pipeline ユーザーで実行すること。**
 ```
 worksheet remove --sample SAMPLE
 worksheet RM -s <sampleid>
 ```
-オプションの詳細
+### オプションの詳細
 ```
 $ worksheet remove -h
 version: v3.0.0
@@ -162,7 +162,7 @@ optional arguments:
 |--sample/-s       |sample ID       |None            |
 |--analysis_dir/-d |解析フォルダの親ディレクトリへのパス |/data1/data/result |
 
-削除できる項目
+### 削除できる項目
 |test_type |item                       |指定方法        
 |:---------|:--------------------------|:---------------------------------------------------|
 |eWES      |SNV (SNV & InDel)          |gene,HGVSc,HGVSp (HGVSpがハイフン "-" の場合は空欄) |
@@ -170,8 +170,8 @@ optional arguments:
 |WTS       |FS (Fusion)                |gene_1,gene_2,chr1:position1,chr2:position2         |
 |WTS       |AS (Alternative Splicing)  |[EGFR,MET,AR]  (カンマ区切りで複数指定可)           |
 
-\*Genomic Signatures(MSI/TMB), SNV/InDel with Insufficient Depth は未対応。\
-\*CNV は Intermediate の遺伝子も含めて指定可。
+- Genomic Signatures(MSI/TMB), SNV/InDel with Insufficient Depth は未対応。
+- CNV は Intermediate の遺伝子も含めて指定可。
 
 ## 5\. データベースのリセット
 指定された SampleID について、データベースに登録された解析結果を削除し、解析フォルダにPDF/JSONが存在する場合はリネームする。\
@@ -182,7 +182,7 @@ optional arguments:
 worksheet reset --sample <sampleid> (--roll_back)
 worksheet RE -s <sampleid> (--roll_back)
 ```
-オプションの詳細
+### オプションの詳細
 ```
 $ worksheet reset -h
 version: v3.0.0

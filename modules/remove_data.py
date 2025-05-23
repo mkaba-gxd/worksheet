@@ -121,7 +121,9 @@ def handle_snv(file_path, anaDir, sample):
     if deleted_rows > 0:
         backup = backup_and_write_file(file_path, data)
         confirm_diff_and_report(file_path, backup, deleted_rows)
-        create_rerun_bash(anaDir, sample)
+        choice = prompt_choice("Do you want to create rerun.sh? (yes[Y]/no[N]): ", ['yes', 'y', 'no', 'n'])
+        if choice in ['yes', 'y']:
+            create_rerun_bash(anaDir, sample)
 
 def handle_cnv(file_path, anaDir, sample):
 
@@ -133,8 +135,8 @@ def handle_cnv(file_path, anaDir, sample):
         return
 
     while True:
-        gene = input("What Copy Number to delete?[gene]: ").strip()
-        match = data[data['Gene_name'] == gene]
+        genes = input("What Copy Number to delete?[genes]: ").strip().split(',')
+        match = data[data['Gene_name'].isin(genes)]
 
         if match.empty:
             print("No applicable data.")
@@ -158,7 +160,9 @@ def handle_cnv(file_path, anaDir, sample):
     if deleted_rows > 0:
         backup = backup_and_write_file(file_path, data)
         confirm_diff_and_report(file_path, backup, deleted_rows)
-        create_rerun_bash(anaDir, sample)
+        choice = prompt_choice("Do you want to create rerun.sh? (yes[Y]/no[N]): ", ['yes', 'y', 'no', 'n'])
+        if choice in ['yes', 'y']:
+            create_rerun_bash(anaDir, sample)
 
 def handle_fusion(file_path, anaDir, sample):
 
@@ -212,7 +216,9 @@ def handle_fusion(file_path, anaDir, sample):
     if deleted_rows > 0:
         backup = backup_and_write_file(file_path, data)
         confirm_diff_and_report(file_path, backup, deleted_rows)
-        create_rerun_bash(anaDir, sample)
+        choice = prompt_choice("Do you want to create rerun.sh? (yes[Y]/no[N]): ", ['yes', 'y', 'no', 'n'])
+        if choice in ['yes', 'y']:
+            create_rerun_bash(anaDir, sample)
 
 def handle_splice(file_path, anaDir, sample):
 
@@ -261,7 +267,9 @@ def handle_splice(file_path, anaDir, sample):
     if deleted_rows > 0:
         backup = backup_and_write_file(file_path, data)
         confirm_diff_and_report(file_path, backup, deleted_rows)
-        create_rerun_bash(anaDir, sample)
+        choice = prompt_choice("Do you want to create rerun.sh? (yes[Y]/no[N]): ", ['yes', 'y', 'no', 'n'])
+        if choice in ['yes', 'y']:
+            create_rerun_bash(anaDir, sample)
 
 def remove_ewes(sample, anaDir):
 
@@ -273,18 +281,23 @@ def remove_ewes(sample, anaDir):
     if not os.path.isfile(FAIL_C):
         init(f"CNV file does not exist: {FAIL_C}")
 
+    target = input("Which item(s) would you like to modify? [SNV/CNV/quit[Q]]: ").strip().lower()
+
     while True:
-        target = input("Which item(s) would you like to modify? [SNV/CNV/quit[Q]]: ").strip().lower()
+
         if target == 'snv':
             handle_snv(FAIL_S, anaDir, sample)
-            break
         elif target == 'cnv':
             handle_cnv(FAIL_C, anaDir, sample)
-            break
         elif target in ['quit', 'q']:
             break
         else:
             print("Invalid input. Please enter 'SNV' or 'CNV' or 'quit(Q)'.")
+            target = input("Which item(s) would you like to modify? [SNV/CNV/quit[Q]]: ").strip().lower()
+            continue
+
+        target = input("Which additional items would you like to edit? [SNV/CNV/quit[Q]]: ").strip().lower()
+
 
 
 def remove_wts(sample, anaDir):
@@ -297,18 +310,22 @@ def remove_wts(sample, anaDir):
     if not os.path.isfile(FAIL_A):
         init("alternative splicing file does not exist: {FAIL_A}")
 
+    target = input("Which item(s) would you like to modify? [FS/AS/quit[Q]]: ").strip().lower()
+
     while True:
-        target = input("Which item(s) would you like to modify? [FS/AS/quit[Q]]: ").strip().lower()
+
         if target == 'fs':
             handle_fusion(FAIL_F, anaDir, sample)
-            break
         elif target == 'as':
             handle_splice(FAIL_A, anaDir, sample)
-            break
         elif target in ['quit', 'q']:
             break
         else:
             print("Invalid input. Please enter 'FS' or 'AS' or 'quit(Q)'.")
+            target = input("Which item(s) would you like to modify? [FS/AS/quit[Q]]: ").strip().lower()
+            continue
+
+        target = input("Which additional items would you like to edit? [FS/AS/quit[Q]]: ").strip().lower()
 
 
 def remove_data(args):

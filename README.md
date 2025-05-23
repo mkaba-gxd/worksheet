@@ -5,7 +5,7 @@ DRY工程作業で使用するワークシートの新規作成、シートの�
 |:-------------|:-------------------------------------------------------|
 |create, CR    |ワークシートの新規作成                                  |
 |check, CH     |解析の進捗確認                                          |
-|addition, ADD |ワークシートに解析結果内容のシートを追加                |
+|addition, ADD |ワークシートに解析情報を記載したシートを追加            |
 |remove, RM    |解析結果の編集(Summaryファイルの行削除)とrerun.shの作成 |
 |reset, RE     |DBに登録された解析結果を削除しanalysis statusを変更する |
 
@@ -61,12 +61,12 @@ optional arguments:
   --outdir OUTDIR, -o OUTDIR
                         output directory path (default: /data1/work/workSheet)
 ```
-| option         | 概要           |default         |
-|:---------------|:---------------|:---------------|
-|--flowcellid/-fc |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字 |None|
-|--directory/-d   |解析フォルダの親ディレクトリへのパス|/data1/data/result|
-|--project_type/-t|解析種別。bath,eWES,WTSから選択する。|both|
-|--outdir/-o      |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet|
+| option          | 概要           |default         |
+|:----------------|:---------------|:---------------|
+|--flowcellid/-fc |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字   |None |
+|--directory/-d   |解析フォルダの親ディレクトリへのパス  |/data1/data/result    |
+|--project_type/-t|解析種別。bath,eWES,WTSから選択する。 |both                  |
+|--outdir/-o      |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet |
 
 ## 2\. 解析の進捗確認
 rawdataに格納されているSampleSheetの内容と、DBに登録されている検体情報が一致することを確認する。\
@@ -96,17 +96,18 @@ optional arguments:
   --novadir NOVADIR, -n NOVADIR
                         novaseq directory (default: /data1/gxduser/novaseqx)
 ```
-| option         | 概要           |default         |
-|:---------------|:---------------|:---------------|
-|--flowcellid/-fc |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字 |None|
-|--directory/-d   |解析フォルダの親ディレクトリへのパス|/data1/data/result|
-|--project_type/-t|解析種別。bath,eWES,WTSから選択する。|both|
-|--linkDir/-l     |PDFレポートのリンク先ディレクトリへのパス|/data1/work/report|
-|--novadir/-n     |NGSデータ転送先フォルダ|/data1/gxduser/novaseqx|
+| option          | 概要           |default         |
+|:----------------|:---------------|:---------------|
+|--flowcellid/-fc |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字 |None |
+|--directory/-d   |解析フォルダの親ディレクトリへのパス |/data1/data/result      |
+|--project_type/-t|解析種別。bath,eWES,WTSから選択する。|both                    |
+|--linkDir/-l     |PDFレポートのリンク先ディレクトリへのパス|/data1/work/report  |
+|--novadir/-n     |NGSデータ転送先フォルダ              |/data1/gxduser/novaseqx |
 
 ## 3\. シートの追加
-作成済のワークシートにQC情報を記載したqc_infoシートを追加する。\
-report.jsonが作成済の検体に対し、Summaryフォルダに格納されたsummarized.*.tsvをからレポートに掲載される変異を検査項目ごとにまとめたシートを追加する。
+作成済のワークシートにQC情報や、Summaryフォルダに格納された summarized.\*.tsv からレポートに掲載される変異を検査項目ごとにまとめたシートを追加する。\
+解析途中の検体があった場合は、操作の継続を聞かれるので選択する。\
+**継続する場合は、解析中検体の情報は記載されない**ので、全検体の解析が終了した後に再度実行すること。
 ```
 worksheet addition -fc <flowcellid>
 worksheet ADD -fc <flowcellid>
@@ -128,17 +129,17 @@ optional arguments:
   --outdir OUTDIR, -o OUTDIR
                         output directory path (default: /data1/work/workSheet)
 ```
-| option         | 概要           |default         |
-|:---------------|:---------------|:---------------|
-|--flowcellid/-fc |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字 |None|
-|--directory/-d   |解析フォルダの親ディレクトリへのパス|/data1/data/result|
-|--project_type/-t|解析種別。bath,eWES,WTSから選択する。|both|
+| option          | 概要           |default         |
+|:----------------|:---------------|:---------------|
+|--flowcellid/-fc |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字  |None |
+|--directory/-d   |解析フォルダの親ディレクトリへのパス  |/data1/data/result   |
+|--project_type/-t|解析種別。bath,eWES,WTSから選択する。 |both                 |
 |--outdir/-o      |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet|
 
 ## 4\. 解析結果の削除
 指定された SampleID について、解析フォルダに格納されているsummaryファイルの不要な行を削除する。\
 対話型プログラムなので、表示される内容に応じて編集する内容を入力する。\
-解析フォルダ内データの書き換えを行うので gxd_pipeline ユーザーで実行すること。\
+**解析フォルダ内データの書き換えを行うので gxd_pipeline ユーザーで実行すること。**
 ```
 worksheet remove --sample SAMPLE
 worksheet RM -s <sampleid>
@@ -158,14 +159,24 @@ optional arguments:
 ```
 | option           | 概要           |default         |
 |:-----------------|:---------------|:---------------|
-|--sample/-s       |sample ID       |None |
-|--analysis_dir/-d |解析フォルダの親ディレクトリへのパス|/data1/data/result|
+|--sample/-s       |sample ID       |None            |
+|--analysis_dir/-d |解析フォルダの親ディレクトリへのパス |/data1/data/result |
+
+削除できる項目
+|test_type |item                       |指定方法        
+|:---------|:--------------------------|:-------------------------------------------|
+|eWES      |SNV (SNV & InDel)          |gene,HGVSc,HGVSp \*HGVSpが-の場合は空欄     |
+|eWES      |CNV (Copy Number Variants) |gene \*カンマ区切りで複数指定可             |
+|WTS       |FS (Fusion)                |gene_1,gene_2,chr1:position1,chr2:position2 |
+|WTS       |AS (Alternative Splicing)  |[EGFR,MET,AR]  \*カンマ区切りで複数指定可   |
+\*Genomic Signatures(MSI/TMB), SNV/InDel with Insufficient Depth は選択付加
+\*CNV はIntermediateも削除可能
 
 ## 5\. データベースのリセット
 指定された SampleID について、データベースに登録された解析結果を削除し、解析フォルダにPDF/JSONが存在する場合はリネームする。\
 --status オプションで解析ステータスを変更する。 100:解析前, 101:解析中, 102:解析完了 \
 指定しない場合は解析ステータスは変更しない。\
-100を指定した場合はcronによる再解析が行われる。
+**100を指定した場合はcronによる再解析が行われる。**
 ```
 worksheet reset --sample <sampleid> (--roll_back)
 worksheet RE -s <sampleid> (--roll_back)
@@ -187,7 +198,7 @@ optional arguments:
 ```
 | option           | 概要           |default         |
 |:-----------------|:---------------|:---------------|
-|--sample/-s       |sample ID       |None |
-|--status/-t       |analysis status を指定する。100:解析前, 101:解析中, 102:解析完了, None(オプションなし):変更しない |None|
-|--analysis_dir/-d |解析フォルダの親ディレクトリへのパス|/data1/data/result|
+|--sample/-s       |sample ID       |None            |
+|--status/-t       |analysis status を指定する。100:解析前, 101:解析中, 102:解析完了, None(オプションなし):変更しない |None |
+|--analysis_dir/-d |解析フォルダの親ディレクトリへのパス |/data1/data/result |
 

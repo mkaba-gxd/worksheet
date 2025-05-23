@@ -170,7 +170,7 @@ optional arguments:
 |WTS       |FS (Fusion)                |gene_1,gene_2,chr1:position1,chr2:position2 |
 |WTS       |AS (Alternative Splicing)  |[EGFR,MET,AR]  \*カンマ区切りで複数指定可   |
 
-\*Genomic Signatures(MSI/TMB), SNV/InDel with Insufficient Depth は選択付加
+\*Genomic Signatures(MSI/TMB), SNV/InDel with Insufficient Depth は選択付加\
 \*CNV はIntermediateも削除可能
 
 ## 5\. データベースのリセット

@@ -112,14 +112,18 @@ class ADD_QC :
                             df_qc = pd.DataFrame(index=[item['SAMPLE_ID']])
 
                     elif answer in ['n', 'no']:
-                        init("Process aborted by the user.")
+                        print("Process aborted by the user.")
+                        return None
                     else:
-                        init("Invalid input. Process aborted.")
+                        print("Invalid input. Process aborted.")
+                        return None
 
                 else :
                     init("\nNo input received within 60 seconds. The process will now be aborted.")
 
-        if count_i == 0: init('There are no samples completed for analysis.')
+        if count_i == 0:
+            print('There are no samples completed for analysis.')
+            return None
 
         tbl_th = tbl_th[tbl_th['PRJ_TYPE']==df.loc[0,'PRJ_TYPE']].reset_index(drop=True)
 
@@ -177,6 +181,9 @@ class ADD_QC :
             temp_info = df_info[ (df_info['sub_name']==item['sub_name']) & (df_info['PRJ_TYPE']==item['PRJ_TYPE']) ].reset_index(drop=True)
             temp_info = temp_info[['run_id','PRJ_TYPE','seqDir','ANAL_STATUS','SAMPLE_ID']]
             temp_qc = self.check_qc(temp_info, tbl_th, self.directory)
+            if temp_qc is None :
+                continue
+
             temp_qc['CTRL'] = np.where(temp_qc.index.str.contains(PC, case=False, regex=False),'PC', np.where(temp_qc.index.str.contains(NC, case=False, regex=False),'NC',''))
 
             wet_info = self.get_wet_info(self.flowcellid, item['PRJ_TYPE'])

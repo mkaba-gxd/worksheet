@@ -1,17 +1,17 @@
 # worksheet マニュアル
 DRY工程作業で使用するワークシートの新規作成、シートの追加、解析の進捗確認
 
-| command      | 概要                                                |
-|:-------------|:---------------------------------------------------|
-|create, CR    |ワークシートの新規作成                                |
-|check, CH     |解析の進捗確認                                       |
-|addition, ADD |ワークシートに解析情報を記載したシートを追加            |
-|remove, RM    |解析結果の編集(Summaryファイルの行削除)とrerun.shの作成 |
-|reset, RE     |DBに登録された解析結果を削除しanalysis statusを変更する |
+| command      | 概要                                                 |
+|:-------------|:-----------------------------------------------------|
+|create, CR    |ワークシートの新規作成                                  |
+|check, CH     |解析の進捗確認                                         |
+|addition, ADD |ワークシートに解析情報を記載したシートを追加              |
+|remove, RM    |解析結果の編集（Summaryファイルの行削除）とrerun.shの作成 |
+|reset, RE     |DBに登録された解析結果を削除しanalysis statusを変更する  |
 
 ## 0\. 準備
-エイリアスを作成する（初回のみ）。\
-~/bin フォルダを作成し、以下のコマンドを記載したテキストファイル worksheet を作成しておく。\
+エイリアスを作成する。（初回のみ）\
+~/bin フォルダを作成し、以下のコマンドを記載したテキストファイル worksheet を作成し、実行権限を付与する。\
 エイリアスを作成しない場合は、singularity でコンテナを指定して実行する。
 ```
 singularity exec --disable-cache --bind /data1 /data1/labTools/labTools.sif python /data1/labTools/worksheet/latest/worksheet.py $@

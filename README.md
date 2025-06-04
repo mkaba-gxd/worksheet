@@ -48,7 +48,8 @@ worksheet CR -fc <flowcellid>
 ```
 $ worksheet create -h
 version: v3.0.0
-usage: worksheet.py create [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}] [--outdir OUTDIR]
+usage: worksheet.py create [-h] --flowcellid FLOWCELLID [--directory DIRECTORY]
+                           [--project_type {both,WTS,eWES}] [--outdir OUTDIR]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -82,7 +83,8 @@ worksheet CH -fc <flowcellid>
 ```
 $ worksheet check -h
 version: v3.0.0
-usage: worksheet.py check [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}] [--linkDir LINKDIR] [--novadir NOVADIR]
+usage: worksheet.py check [-h] --flowcellid FLOWCELLID [--directory DIRECTORY]
+                          [--project_type {both,WTS,eWES}] [--linkDir LINKDIR] [--novadir NOVADIR]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -117,7 +119,8 @@ worksheet ADD -fc <flowcellid>
 ```
 $ worksheet addition -h
 version: v3.0.0
-usage: worksheet.py addition [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}] [--outdir OUTDIR]
+usage: worksheet.py addition [-h] --flowcellid FLOWCELLID [--directory DIRECTORY]
+                             [--project_type {both,WTS,eWES}] [--outdir OUTDIR]
 
 optional arguments:
   -h, --help            show this help message and exit

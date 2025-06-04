@@ -38,12 +38,12 @@ optional arguments:
 ```
 
 ## 1\. ワークシートの作成
-\<OUTDIR\>にワークシートを作成する。同名のファイルがある場合は上書きするかどうか選択する。\
-\<DIRECTORY\>に解析フォルダが作成されてから実行すること。
 ```
 worksheet create -fc <flowcellid>
 worksheet CR -fc <flowcellid>
 ```
+\<OUTDIR\>にワークシートを作成する。同名のファイルがある場合は上書きするかどうか選択する。\
+\<DIRECTORY\>に解析フォルダが作成されてから実行すること。
 ### オプションの詳細
 ```
 $ worksheet create -h
@@ -65,18 +65,19 @@ optional arguments:
 |:----------------|:---------------|:---------------|
 |--flowcellid/-fc |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字   |None |
 |--directory/-d   |解析フォルダの親ディレクトリへのパス  |/data1/data/result    |
-|--project_type/-t|解析種別。bath,eWES,WTSから選択する。 |both                  |
+|--project_type/-t|解析種別。both,eWES,WTSから選択する。 |both                  |
 |--outdir/-o      |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet |
 
 ## 2\. 解析の進捗確認
-rawdataに格納されているSampleSheetの内容と、DBに登録されている検体情報が一致することを確認する。\
-analysis statusを調べて解析の進捗を表示する。\
-report.jsonとreport.pdfが作成されていることを確認する。\
-\<LINKDIR\>に作成済みreport.pdfのシンボリックリンクを作成する。
 ```
 worksheet check -fc <flowcellid>
 worksheet CH -fc <flowcellid>
 ```
+以下の挙動をとる。
+- rawdataに格納されているSampleSheetの内容と、DBに登録されている検体情報が一致することを確認する。
+- analysis statusを調べて解析の進捗を表示する。
+- report.jsonとreport.pdfが作成されていることを確認する。
+- \<LINKDIR\>に作成済みreport.pdfのシンボリックリンクを作成する。
 ### オプションの詳細
 ```
 $ worksheet check -h
@@ -96,22 +97,22 @@ optional arguments:
   --novadir NOVADIR, -n NOVADIR
                         novaseq directory (default: /data1/gxduser/novaseqx)
 ```
-| option          | 概要           |default         |
-|:----------------|:---------------|:---------------|
-|--flowcellid/-fc |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字 |None |
-|--directory/-d   |解析フォルダの親ディレクトリへのパス |/data1/data/result      |
-|--project_type/-t|解析種別。bath,eWES,WTSから選択する。|both                    |
-|--linkDir/-l     |PDFレポートのリンク先ディレクトリへのパス|/data1/work/report  |
-|--novadir/-n     |NGSデータ転送先フォルダ              |/data1/gxduser/novaseqx |
+| option           | 概要           |default         |
+|:-----------------|:---------------|:---------------|
+|--flowcellid/-fc  |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字 |None |
+|--directory/-d    |解析フォルダの親ディレクトリへのパス |/data1/data/result      |
+|--project_type/-t |解析種別。both,eWES,WTSから選択する。|both                   |
+|--linkDir/-l      |PDFレポートのリンク先ディレクトリへのパス|/data1/work/report  |
+|--novadir/-n      |NGSデータ転送先フォルダ              |/data1/gxduser/novaseqx |
 
 ## 3\. シートの追加
-作成済のワークシートにQC情報や、Summaryフォルダに格納された summarized.\*.tsv からレポートに掲載される変異を検査項目ごとにまとめたシートを追加する。\
-解析途中の検体があった場合は、操作の継続を聞かれるので選択する。\
-**継続する場合は、解析中検体の情報は記載されない**ので、全検体の解析が終了した後に再度実行すること。
 ```
 worksheet addition -fc <flowcellid>
 worksheet ADD -fc <flowcellid>
 ```
+作成済のワークシートにQC情報や、Summaryフォルダに格納された summarized.\*.tsv からレポートに掲載される変異を検査項目ごとにまとめたシートを追加する。\
+解析途中の検体があった場合は、操作の継続を聞かれるので選択する。\
+**継続する場合は、解析中検体の情報は記載されない**ので、全検体の解析が終了した後に再度実行すること。
 ### オプションの詳細
 ```
 $ worksheet addition -h
@@ -133,17 +134,17 @@ optional arguments:
 |:----------------|:---------------|:---------------|
 |--flowcellid/-fc |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字  |None |
 |--directory/-d   |解析フォルダの親ディレクトリへのパス  |/data1/data/result   |
-|--project_type/-t|解析種別。bath,eWES,WTSから選択する。 |both                 |
+|--project_type/-t|解析種別。both,eWES,WTSから選択する。 |both                 |
 |--outdir/-o      |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet|
 
 ## 4\. 解析結果の削除
-指定された SampleID について、解析フォルダに格納されているsummaryファイルの不要な行を削除する。\
-対話型プログラムなので、表示される内容に応じて編集する内容を入力する。\
-解析フォルダ内データの書き換えを行うので **gxd_pipeline ユーザーで実行すること。**
 ```
 worksheet remove --sample SAMPLE
 worksheet RM -s <sampleid>
 ```
+指定された SampleID について、解析フォルダに格納されているsummaryファイルの不要な行を削除する。\
+対話型プログラムなので、表示される内容に応じて編集する内容を入力する。\
+解析フォルダ内データの書き換えを行うので **gxd_pipeline ユーザーで実行すること。**
 ### オプションの詳細
 ```
 $ worksheet remove -h
@@ -174,14 +175,14 @@ optional arguments:
 - CNV は Intermediate の遺伝子も含めて指定可。
 
 ## 5\. データベースのリセット
+```
+worksheet reset --sample <sampleid> --status [100/101/102]
+worksheet RE -s <sampleid> -t [100/101/102]
+```
 指定された SampleID について、データベースに登録された解析結果を削除し、解析フォルダにPDF/JSONが存在する場合はリネームする。\
 --status オプションで解析ステータスを変更する。 100:解析前, 101:解析中, 102:解析完了 \
 指定しない場合は解析ステータスは変更しない。\
 **100を指定した場合はcronによる再解析が行われる。**
-```
-worksheet reset --sample <sampleid> (--roll_back)
-worksheet RE -s <sampleid> (--roll_back)
-```
 ### オプションの詳細
 ```
 $ worksheet reset -h

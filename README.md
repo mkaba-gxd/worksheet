@@ -7,7 +7,7 @@ DRY工程作業で使用するワークシートの新規作成、シートの�
 |check, CH     |解析の進捗確認                                         |
 |addition, ADD |ワークシートに解析情報を記載したシートを追加              |
 |remove, RM    |解析結果の編集（Summaryファイルの行削除）とrerun.shの作成 |
-|reset, RE     |DBに登録された解析結果を削除しanalysis statusを変更する  |
+|reset, RE     |DBに登録された解析結果を削除し、analysis statusを変更する |
 
 ## 0\. 準備
 エイリアスを作成する。（初回のみ）\
@@ -39,7 +39,7 @@ optional arguments:
 
 ## 1\. ワークシートの作成
 ```
-worksheet create -fc <flowcellid>
+worksheet create --flowcellid <flowcellid>
 worksheet CR -fc <flowcellid>
 ```
 \<OUTDIR\>にワークシートを作成する。同名のファイルがある場合は上書きするかどうか選択する。\
@@ -71,7 +71,7 @@ optional arguments:
 
 ## 2\. 解析の進捗確認
 ```
-worksheet check -fc <flowcellid>
+worksheet check --flowcellid <flowcellid>
 worksheet CH -fc <flowcellid>
 ```
 以下の挙動をとる。
@@ -109,12 +109,16 @@ optional arguments:
 
 ## 3\. シートの追加
 ```
-worksheet addition -fc <flowcellid>
+worksheet addition --flowcellid <flowcellid>
 worksheet ADD -fc <flowcellid>
 ```
-作成済のワークシートにQC情報や、Summaryフォルダに格納された summarized.\*.tsv からレポートに掲載される変異を検査項目ごとにまとめたシートを追加する。\
+作成済のワークシートに以下の情報を項目別にまとめたシートを追加する。
+- QC情報（OncoStationに掲載される項目。WETのQCも含む）
+- レポートに記載される解析結果（Summaryフォルダに格納された summarized.\*.tsv から収集）
+
 解析途中の検体があった場合は、操作の継続を聞かれるので選択する。\
-**継続する場合は、解析中検体の情報は記載されない**ので、全検体の解析が終了した後に再度実行すること。
+**継続する場合は、解析中の検体情報は記載されない**ので、全検体の解析が終了した後に再度実行してQC情報が確認できるようにしておく。\
+なお、再実行時した場合は work_sheet, sample_info 以外のシートは上書きされる。
 ### オプションの詳細
 ```
 $ worksheet addition -h
@@ -168,11 +172,11 @@ optional arguments:
 
 ### 削除できる項目
 |test_type |item                       |指定方法        
-|:---------|:--------------------------|:---------------------------------------------------|
+|:---------|:--------------------------|:-------------------------------------------------|
 |eWES      |SNV (SNV & InDel)          |gene,HGVSc,HGVSp (HGVSpがハイフン "-" の場合は空欄) |
 |eWES      |CNV (Copy Number Variants) |gene1,gene2,... (カンマ区切りで複数指定可)          |
-|WTS       |FS (Fusion)                |gene_1,gene_2,chr1:position1,chr2:position2         |
-|WTS       |AS (Alternative Splicing)  |[EGFR,MET,AR]  (カンマ区切りで複数指定可)           |
+|WTS       |FS (Fusion)                |gene_1,gene_2,chr1:position1,chr2:position2       |
+|WTS       |AS (Alternative Splicing)  |[EGFR,MET,AR] から選択 (カンマ区切りで複数指定可)    |
 
 - Genomic Signatures(MSI/TMB), SNV/InDel with Insufficient Depth は未対応。
 - CNV は Intermediate の遺伝子も含めて指定可。
@@ -185,7 +189,7 @@ worksheet RE -s <sampleid> -t [100/101/102]
 指定された SampleID について、データベースに登録された解析結果を削除し、解析フォルダにPDF/JSONが存在する場合はリネームする。\
 --status オプションで解析ステータスを変更する。 100:解析前, 101:解析中, 102:解析完了 \
 指定しない場合は解析ステータスは変更しない。\
-**100を指定した場合はcronによる再解析が行われる。**
+**--status オプションで100を指定した場合はcronによる再解析が行われる。**
 ### オプションの詳細
 ```
 $ worksheet reset -h

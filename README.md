@@ -42,8 +42,6 @@ optional arguments:
 worksheet create --flowcellid <flowcellid>
 worksheet CR -fc <flowcellid>
 ```
-\<OUTDIR\>にワークシートを作成する。同名のファイルがある場合は上書きするかどうか選択する。\
-\<DIRECTORY\>に解析フォルダが作成されてから実行すること。
 ### オプションの詳細
 ```
 $ worksheet create -h
@@ -68,6 +66,9 @@ optional arguments:
 |--directory/-d    |False    |解析フォルダの親ディレクトリへのパス  |/data1/data/result    |
 |--project_type/-t |False    |解析種別。both,eWES,WTSから選択する  |both                  |
 |--outdir/-o       |False    |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet |
+
+\<OUTDIR\>にワークシートを作成する。同名のファイルがある場合は上書きするかどうか選択する。\
+\<DIRECTORY\>に解析フォルダが作成されてから実行すること。
 
 ## 2\. 解析の進捗確認
 ```
@@ -115,10 +116,6 @@ worksheet ADD -fc <flowcellid>
 作成済のワークシートに以下の情報を項目別にまとめたシートを追加する。
 - QC情報（OncoStationに掲載される項目。WETのQCも含む）
 - レポートに記載される解析結果（Summaryフォルダに格納された summarized.\*.tsv から収集）
-
-解析途中の検体があった場合は、操作の継続を聞かれるので選択する。\
-**継続する場合は、解析中の検体情報は記載されない**ので、全検体の解析が終了した後に再度実行してQC情報が確認できるようにしておく。\
-なお、再実行時した場合は work_sheet, sample_info 以外のシートは上書きされる。
 ### オプションの詳細
 ```
 $ worksheet addition -h
@@ -143,6 +140,10 @@ optional arguments:
 |--directory/-d    |False    |解析フォルダの親ディレクトリへのパス  |/data1/data/result   |
 |--project_type/-t |False    |解析種別。both,eWES,WTSから選択する  |both                 |
 |--outdir/-o       |False    |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet|
+
+解析途中の検体があった場合は、操作の継続を聞かれるので選択する。\
+**継続する場合は、解析中の検体情報は記載されない**ので、全検体の解析が終了した後に再度実行してQC情報が確認できるようにしておく。\
+なお、再実行時した場合は work_sheet, sample_info 以外のシートは上書きされる。
 
 ## 4\. 解析結果の削除
 ```
@@ -186,10 +187,6 @@ optional arguments:
 worksheet reset --sample <sampleid> --status [100/101/102]
 worksheet RE -s <sampleid> -t [100/101/102]
 ```
-指定された SampleID について、データベースに登録された解析結果を削除し、解析フォルダにPDF/JSONが存在する場合はリネームする。\
---status オプションで解析ステータスを変更する。 100:解析前, 101:解析中, 102:解析完了 \
-指定しない場合は解析ステータスは変更しない。\
-**--status オプションで100を指定した場合はcronによる再解析が行われる。**
 ### オプションの詳細
 ```
 $ worksheet reset -h
@@ -211,3 +208,7 @@ optional arguments:
 |--status/-t       |False    |analysis status を指定する。100:解析前, 101:解析中, 102:解析完了, None(オプションなし):変更しない |None |
 |--analysis_dir/-d |False    |解析フォルダの親ディレクトリへのパス |/data1/data/result |
 
+指定された SampleID について、データベースに登録された解析結果を削除し、解析フォルダにPDF/JSONが存在する場合はリネームする。\
+--status オプションで解析ステータスを変更する。 100:解析前, 101:解析中, 102:解析完了 \
+指定しない場合は解析ステータスは変更しない。\
+**--status オプションで100を指定した場合はcronによる再解析が行われる。**

@@ -48,7 +48,6 @@ $ worksheet create -h
 version: v3.0.0
 usage: worksheet.py create [-h] --flowcellid FLOWCELLID [--directory DIRECTORY]
                            [--project_type {both,WTS,eWES}] [--outdir OUTDIR]
-
 optional arguments:
   -h, --help            show this help message and exit
   --flowcellid FLOWCELLID, -fc FLOWCELLID
@@ -61,7 +60,7 @@ optional arguments:
                         output directory path (default: /data1/work/workSheet)
 ```
 | option           |required | 概要           |default         |
-|:-----------------|:--------|:---------------|:---------------|
+|:-----------------|:-------:|:---------------|:---------------|
 |--flowcellid/-fc  |True     |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字   |None |
 |--directory/-d    |False    |解析フォルダの親ディレクトリへのパス  |/data1/data/result    |
 |--project_type/-t |False    |解析種別。both,eWES,WTSから選択する  |both                  |
@@ -86,7 +85,6 @@ $ worksheet check -h
 version: v3.0.0
 usage: worksheet.py check [-h] --flowcellid FLOWCELLID [--directory DIRECTORY]
                           [--project_type {both,WTS,eWES}] [--linkDir LINKDIR] [--novadir NOVADIR]
-
 optional arguments:
   -h, --help            show this help message and exit
   --flowcellid FLOWCELLID, -fc FLOWCELLID
@@ -101,7 +99,7 @@ optional arguments:
                         novaseq directory (default: /data1/gxduser/novaseqx)
 ```
 | option           |required | 概要           |default         |
-|:-----------------|:--------|:---------------|:---------------|
+|:-----------------|:-------:|:---------------|:---------------|
 |--flowcellid/-fc  |True     |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字 |None |
 |--directory/-d    |False    |解析フォルダの親ディレクトリへのパス |/data1/data/result      |
 |--project_type/-t |False    |解析種別。both,eWES,WTSから選択する。|both                   |
@@ -122,7 +120,6 @@ $ worksheet addition -h
 version: v3.0.0
 usage: worksheet.py addition [-h] --flowcellid FLOWCELLID [--directory DIRECTORY]
                              [--project_type {both,WTS,eWES}] [--outdir OUTDIR]
-
 optional arguments:
   -h, --help            show this help message and exit
   --flowcellid FLOWCELLID, -fc FLOWCELLID
@@ -135,7 +132,7 @@ optional arguments:
                         output directory path (default: /data1/work/workSheet)
 ```
 | option           |required | 概要           |default         |
-|:-----------------|:--------|:---------------|:---------------|
+|:-----------------|:-------:|:---------------|:---------------|
 |--flowcellid/-fc  |True     |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字  |None |
 |--directory/-d    |False    |解析フォルダの親ディレクトリへのパス  |/data1/data/result   |
 |--project_type/-t |False    |解析種別。both,eWES,WTSから選択する  |both                 |
@@ -168,7 +165,7 @@ optional arguments:
                         parent analytical directory (default: /data1/data/result)
 ```
 | option           |required | 概要           |default         |
-|:-----------------|:--------|:---------------|:---------------|
+|:-----------------|:-------:|:---------------|:---------------|
 |--sample/-s       |True     |sample ID       |None            |
 |--analysis_dir/-d |False    |解析フォルダの親ディレクトリへのパス |/data1/data/result |
 
@@ -204,7 +201,7 @@ optional arguments:
                         parent analytical directory (default: /data1/data/result)
 ```
 | option           |required | 概要           |default         |
-|:-----------------|:--------|:---------------|:---------------|
+|:-----------------|:-------:|:---------------|:---------------|
 |--sample/-s       |True     |sample ID       |None            |
 |--status/-t       |False    |analysis status を指定する。100:解析前, 101:解析中, 102:解析完了, None(オプションなし):変更しない |None |
 |--analysis_dir/-d |False    |解析フォルダの親ディレクトリへのパス |/data1/data/result |

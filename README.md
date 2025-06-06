@@ -62,12 +62,12 @@ optional arguments:
   --outdir OUTDIR, -o OUTDIR
                         output directory path (default: /data1/work/workSheet)
 ```
-| option          | 概要           |default         |
-|:----------------|:---------------|:---------------|
-|--flowcellid/-fc |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字   |None |
-|--directory/-d   |解析フォルダの親ディレクトリへのパス  |/data1/data/result    |
-|--project_type/-t|解析種別。both,eWES,WTSから選択する。 |both                  |
-|--outdir/-o      |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet |
+| option           |required | 概要           |default         |
+|:-----------------|:--------|:---------------|:---------------|
+|--flowcellid/-fc  |True     |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字   |None |
+|--directory/-d    |False    |解析フォルダの親ディレクトリへのパス  |/data1/data/result    |
+|--project_type/-t |False    |解析種別。both,eWES,WTSから選択する  |both                  |
+|--outdir/-o       |False    |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet |
 
 ## 2\. 解析の進捗確認
 ```
@@ -99,13 +99,13 @@ optional arguments:
   --novadir NOVADIR, -n NOVADIR
                         novaseq directory (default: /data1/gxduser/novaseqx)
 ```
-| option           | 概要           |default         |
-|:-----------------|:---------------|:---------------|
-|--flowcellid/-fc  |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字 |None |
-|--directory/-d    |解析フォルダの親ディレクトリへのパス |/data1/data/result      |
-|--project_type/-t |解析種別。both,eWES,WTSから選択する。|both                   |
-|--linkDir/-l      |PDFレポートのリンク先ディレクトリへのパス|/data1/work/report  |
-|--novadir/-n      |NGSデータ転送先フォルダ              |/data1/gxduser/novaseqx |
+| option           |required | 概要           |default         |
+|:-----------------|:--------|:---------------|:---------------|
+|--flowcellid/-fc  |True     |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字 |None |
+|--directory/-d    |False    |解析フォルダの親ディレクトリへのパス |/data1/data/result      |
+|--project_type/-t |False    |解析種別。both,eWES,WTSから選択する。|both                   |
+|--linkDir/-l      |False    |PDFレポートのリンク先ディレクトリへのパス|/data1/work/report  |
+|--novadir/-n      |False    |NGSデータ転送先フォルダ              |/data1/gxduser/novaseqx |
 
 ## 3\. シートの追加
 ```
@@ -137,12 +137,12 @@ optional arguments:
   --outdir OUTDIR, -o OUTDIR
                         output directory path (default: /data1/work/workSheet)
 ```
-| option          | 概要           |default         |
-|:----------------|:---------------|:---------------|
-|--flowcellid/-fc |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字  |None |
-|--directory/-d   |解析フォルダの親ディレクトリへのパス  |/data1/data/result   |
-|--project_type/-t|解析種別。both,eWES,WTSから選択する。 |both                 |
-|--outdir/-o      |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet|
+| option           |required | 概要           |default         |
+|:-----------------|:--------|:---------------|:---------------|
+|--flowcellid/-fc  |True     |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字  |None |
+|--directory/-d    |False    |解析フォルダの親ディレクトリへのパス  |/data1/data/result   |
+|--project_type/-t |False    |解析種別。both,eWES,WTSから選択する  |both                 |
+|--outdir/-o       |False    |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet|
 
 ## 4\. 解析結果の削除
 ```
@@ -165,10 +165,10 @@ optional arguments:
   --analysis_dir ANALYSIS_DIR, -d ANALYSIS_DIR
                         parent analytical directory (default: /data1/data/result)
 ```
-| option           | 概要           |default         |
-|:-----------------|:---------------|:---------------|
-|--sample/-s       |sample ID       |None            |
-|--analysis_dir/-d |解析フォルダの親ディレクトリへのパス |/data1/data/result |
+| option           |required | 概要           |default         |
+|:-----------------|:--------|:---------------|:---------------|
+|--sample/-s       |True     |sample ID       |None            |
+|--analysis_dir/-d |False    |解析フォルダの親ディレクトリへのパス |/data1/data/result |
 
 ### 削除できる項目
 |test_type |item                       |指定方法        
@@ -205,9 +205,9 @@ optional arguments:
   --analysis_dir ANALYSIS_DIR, -d ANALYSIS_DIR
                         parent analytical directory (default: /data1/data/result)
 ```
-| option           | 概要           |default         |
-|:-----------------|:---------------|:---------------|
-|--sample/-s       |sample ID       |None            |
-|--status/-t       |analysis status を指定する。100:解析前, 101:解析中, 102:解析完了, None(オプションなし):変更しない |None |
-|--analysis_dir/-d |解析フォルダの親ディレクトリへのパス |/data1/data/result |
+| option           |required | 概要           |default         |
+|:-----------------|:--------|:---------------|:---------------|
+|--sample/-s       |True     |sample ID       |None            |
+|--status/-t       |False    |analysis status を指定する。100:解析前, 101:解析中, 102:解析完了, None(オプションなし):変更しない |None |
+|--analysis_dir/-d |False    |解析フォルダの親ディレクトリへのパス |/data1/data/result |
 

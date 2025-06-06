@@ -145,13 +145,14 @@ optional arguments:
 **継続する場合は、解析中の検体情報は記載されない**ので、全検体の解析が終了した後に再度実行してQC情報が確認できるようにしておく。\
 なお、再実行時した場合は work_sheet, sample_info 以外のシートは上書きされる。
 
-## 4\. 解析結果の削除
+## 4\. 解析結果の編集（削除）
 ```
-worksheet remove --sample SAMPLE
-worksheet RM -s <sampleid>
+worksheet remove --sample <sample ID>
+worksheet RM -s <sample ID>
 ```
-指定された SampleID について、解析フォルダに格納されているsummaryファイルの不要な行を削除する。\
 対話型プログラムなので、表示される内容に応じて編集する内容を入力する。\
+指定された sample ID について、解析フォルダに格納されているsummaryファイルの不要な行を削除する。\
+可能な編集は行削除（変異の削除）のみなので、解析結果内容の一部を修正する場合はsummaryファイルを手動で編集してレポートの再作成を実施する。\
 解析フォルダ内データの書き換えを行うので **gxd_pipeline ユーザーで実行すること。**
 ### オプションの詳細
 ```

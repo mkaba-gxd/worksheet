@@ -1,39 +1,12 @@
 # worksheet マニュアル
-DRY工程作業で使用するワークシートの新規作成、シートの追加、解析の進捗確認 \
-<div align="center">
-
-<table>
-  <thead>
-    <tr>
-      <th>command</th>
-      <th>概要</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>create, CR</td>
-      <td>ワークシートの新規作成</td>
-    </tr>
-    <tr>
-      <td>check, CH</td>
-      <td>解析の進捗確認</td>
-    </tr>
-    <tr>
-      <td>addition, ADD</td>
-      <td>ワークシートに解析情報を記載したシートを追加</td>
-    </tr>
-    <tr>
-      <td>remove, RM</td>
-      <td>解析結果の編集（Summaryファイルの行削除）とrerun.shの作成</td>
-    </tr>
-    <tr>
-      <td>reset, RE</td>
-      <td>DBに登録された解析結果の削除とanalysis statusの変更</td>
-    </tr>
-  </tbody>
-</table>
-
-</div>
+DRY工程作業で使用するワークシートの新規作成、シートの追加、解析の進捗確認
+| command      | 概要                                                     |
+|:-------------|:--------------------------------------------------------|
+|create, CR    |ワークシートの新規作成                                     |
+|check, CH     |解析の進捗確認                                            |
+|addition, ADD |ワークシートに解析情報を記載したシートを追加                 |
+|remove, RM    |解析結果の編集（Summaryファイルの行削除）とrerun.shの作成    |
+|reset, RE     |データベースに登録済みの解析結果の削除とanalysis statusの変更 |
 
 ## 0\. 準備
 エイリアスを作成する。（初回のみ）\
@@ -233,5 +206,6 @@ optional arguments:
 |--analysis_dir/-d |False    |解析フォルダの親ディレクトリへのパス |/data1/data/result |
 
 指定された SampleID について、データベースに登録された解析結果を削除し、解析フォルダにPDF/JSONが存在する場合はリネームする。\
+指定された SampleID が Comfirm 実行済だった場合、**statusは変更しない**。その他の変更を行うかどうかを指定する。\
 --status オプションで解析ステータスを変更する。 100:解析前, 101:解析中, 102:解析完了 \
 **100を指定した場合はcronによる再解析が行われる。** なお、指定しない場合は解析ステータスを変更しない。

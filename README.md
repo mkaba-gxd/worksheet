@@ -7,7 +7,7 @@ DRY工程作業で使用するワークシートの新規作成、シートの�
 |check, CH     |解析の進捗確認                                         |
 |addition, ADD |ワークシートに解析情報を記載したシートを追加              |
 |remove, RM    |解析結果の編集（Summaryファイルの行削除）とrerun.shの作成 |
-|reset, RE     |DBに登録された解析結果を削除し、analysis statusを変更する |
+|reset, RE     |DBに登録された解析結果の削除とanalysis statusの変更      |
 
 ## 0\. 準備
 エイリアスを作成する。（初回のみ）\
@@ -102,7 +102,7 @@ optional arguments:
 |:-----------------|:-------:|:---------------|:---------------|
 |--flowcellid/-fc  |True     |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字 |None |
 |--directory/-d    |False    |解析フォルダの親ディレクトリへのパス |/data1/data/result      |
-|--project_type/-t |False    |解析種別。both,eWES,WTSから選択する。|both                   |
+|--project_type/-t |False    |解析種別。both,eWES,WTSから選択する |both                   |
 |--linkDir/-l      |False    |PDFレポートのリンク先ディレクトリへのパス|/data1/work/report  |
 |--novadir/-n      |False    |NGSデータ転送先フォルダ              |/data1/gxduser/novaseqx |
 
@@ -170,12 +170,12 @@ optional arguments:
 |--analysis_dir/-d |False    |解析フォルダの親ディレクトリへのパス |/data1/data/result |
 
 ### 削除できる項目
-|test_type |item                       |指定方法        
-|:---------|:--------------------------|:-------------------------------------------------|
-|eWES      |SNV (SNV & InDel)          |gene,HGVSc,HGVSp (HGVSpがハイフン "-" の場合は空欄) |
-|eWES      |CNV (Copy Number Variants) |gene1,gene2,... (カンマ区切りで複数指定可)          |
-|WTS       |FS (Fusion)                |gene_1,gene_2,chr1:position1,chr2:position2       |
-|WTS       |AS (Alternative Splicing)  |[EGFR,MET,AR] から選択 (カンマ区切りで複数指定可)    |
+|解析種別 |item                       |指定方法        
+|:-------|:--------------------------|:-------------------------------------------------|
+|eWES    |SNV (SNV & InDel)          |gene,HGVSc,HGVSp (HGVSpがハイフン "-" の場合は空欄) |
+|eWES    |CNV (Copy Number Variants) |gene1,gene2,... (カンマ区切りで複数指定可)          |
+|WTS     |FS (Fusion)                |gene_1,gene_2,chr1:position1,chr2:position2       |
+|WTS     |AS (Alternative Splicing)  |[EGFR,MET,AR] から選択 (カンマ区切りで複数指定可)    |
 
 - Genomic Signatures(MSI/TMB), SNV/InDel with Insufficient Depth は未対応。
 - CNV は Intermediate の遺伝子も含めて指定可。

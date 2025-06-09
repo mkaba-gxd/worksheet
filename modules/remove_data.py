@@ -77,6 +77,7 @@ def create_rerun_bash(anaDir, sample) :
 
 def handle_snv(file_path, anaDir, sample):
 
+    columns_to_use = ['CHROM','POS','AF','SYMBOL','HGVSc','HGVSp','Clinvar_CLNSIG','ONCOKB_ONCOGENICITY']
     data = pd.read_csv(file_path, sep='\t', dtype=str, keep_default_na=False, na_values=[])
     deleted_rows = 0
 
@@ -98,8 +99,9 @@ def handle_snv(file_path, anaDir, sample):
             (data['HGVSc'].str.endswith(hgvsc)) &
             (data['HGVSp'].str.endswith(hgvsp))
         ]
+        match_uniq = match[columns_to_use].drop_duplicates().reset_index(drop=True)
 
-        if match.empty:
+        if match_uniq.empty:
             print("No applicable data.")
             choice = prompt_choice("Retry or quit? (retry[R]/quit[Q]): ", ['retry', 'r', 'quit', 'q'])
             if choice in ['quit', 'q']:
@@ -107,10 +109,33 @@ def handle_snv(file_path, anaDir, sample):
             else:
                 continue
 
-        print(match[['CHROM','POS','AF','SYMBOL','HGVSc','HGVSp','Clinvar_CLNSIG','ONCOKB_ONCOGENICITY']])
-        confirm = prompt_choice("Do you want to remove these? (yes[Y]/no[N]): ", ['yes', 'y', 'no', 'n'])
+        print(match_uniq)
+        confirm = prompt_choice("Do you want some or all remove? (all[A]/some[S]/no[N]): ", ['all','a', 'some','s', 'no', 'n'])
 
-        if confirm in ['yes', 'y']:
+        if confirm in ['some', 's']:
+
+            while True:
+                ans = input("Enter index number to delete, separated by commas.")
+                try:
+                    remove_index = list(map(int, ans.strip().split('\t')))
+                except ValueError:
+                    print('Contains non-integer values. Please re-enter.')
+                    continue
+
+                invalid_indices = [i for i in remove_index if i not in match_uniq.index.tolist() ]
+                if len(remove_index) == len(invalid_indices) :
+                    print('No applicable rows. Please re-enter.')
+                    continue
+                if len(invalid_indices) > 0 :
+                   print('Deletes only matching rows.')
+
+                rows_to_remove = match_uniq.loc[[i for i in remove_index if i in match_uniq.index.tolist()]]
+                mask = data[columns_to_use].apply(tuple, axis=1).isin(rows_to_remove.apply(tuple, axis=1))
+                data = data[~mask].reset_index(drop=True)
+                deleted_rows += sum(mask)
+                break
+
+        elif confirm in ['all','a']:
             data = data.drop(match.index)
             deleted_rows += match.shape[0]
 

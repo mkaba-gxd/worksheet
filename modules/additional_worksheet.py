@@ -298,7 +298,7 @@ class ADD_STAT:
         target_data = target_data[['SYMBOL','HGVSc','HGVSp','AF','Clinvar_CLNSIG','ONCOKB_ONCOGENICITY']].drop_duplicates()
         target_data["HGVSc"] = target_data["HGVSc"].str.split(":", expand=True)[1]
         target_data["HGVSp"] = target_data["HGVSp"].str.split(":", expand=True)[1]
-        target_filt = (target_data["Clinvar_CLNSIG"].str.contains("Pathogenic|Likely_pathogenic", case=True, na=False) | target_data["ONCOKB_ONCOGENICITY"].str.contains("oncogenic", case=False, na=False))
+        target_filt = (target_data["Clinvar_CLNSIG"].str.contains("Pathogenic|Likely_pathogenic", case=True, na=False) | target_data["ONCOKB_ONCOGENICITY"].str.contains("oncogenic|resistance", case=False, na=False))
         target_data = target_data.loc[target_filt].sort_values('SYMBOL').reset_index(drop=True)
 
         exome_data = exome_data.infer_objects(copy=False).fillna(np.nan).replace([np.nan], [None])

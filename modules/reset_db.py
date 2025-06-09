@@ -182,20 +182,29 @@ def reset_db(args):
     if (status is not None) and (status not in ['100','101','102']) :
         init('Input value error. Check the status option.')
 
-    subDir, anal_type = getbatch(sample, anal_dir)
+    subDir, anal_type, save_flag = getbatch(sample, anal_dir)
+    if save_flag == 'Y' :
+        print("Comfirmed sample. Status cannot be changed.")
+        rename = prompt_choice("Rename report files? (yes[Y]/no[N]):", ['yes', 'y', 'no', 'n'])
+        choice = prompt_choice("Continue to reset database? (yes[Y]/no[N]):", ['yes', 'y', 'no', 'n'])
+        status = None
+
     if subDir is None :
         init('No registration in database')
 
     pdf = os.path.join(anal_dir, anal_type, subDir, sample, 'Summary', sample+'.report.pdf')
     json = os.path.join(anal_dir, anal_type, subDir, sample, 'Summary', sample+'.report.json')
 
-    if os.path.isfile(pdf) :
+    if rename in ['yes','y'] and os.path.isfile(pdf) :
         mtime = datetime.datetime.fromtimestamp(os.path.getmtime(pdf)).strftime('%m%d%H%M')
         os.rename( pdf, os.path.join(anal_dir, anal_type, subDir, sample, 'Summary', sample + '.' + mtime +'.report.pdf') )
 
-    if os.path.isfile(json) :
+    if rename in ['yes','y'] and os.path.isfile(json) :
         mtime = datetime.datetime.fromtimestamp(os.path.getmtime(json)).strftime('%m%d%H%M')
         os.rename( json, os.path.join(anal_dir, anal_type, subDir, sample, 'Summary', sample + '.' + mtime +'.report.json') )
+
+    if choice in ['no', 'n']:
+        init('Suspend processing.')
 
     if anal_type == 'eWES' :
         reset_ewes(sample, status)

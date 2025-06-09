@@ -61,19 +61,20 @@ def getbatch(sample, anal_dir):
 
         subname = tbl.sub_name[0]
         anal_type = tbl.PRJ_TYPE[0]
+        save_flag = tbl.SAVE_YN[0]
         if anal_type == 'EWES' : anal_type = 'eWES'
         anal_dir = Path(os.path.join(anal_dir, anal_type))
         fcDirs = [fcDir for fcDir in anal_dir.iterdir() if fcDir.name.endswith(subname)]
         if len(fcDirs) != 1: return None, None
         fcDirs.sort()
-        return os.path.basename(fcDirs[-1]), anal_type
+        return os.path.basename(fcDirs[-1]), anal_type, save_flag
 
     except Exception as e:
         return None, None
 
 def subname_query(sample):
     query = f"""
-    SELECT concat(tesh.equip_side, tesh.fc_id) AS sub_name, gp.PRJ_TYPE
+    SELECT concat(tesh.equip_side, tesh.fc_id) AS sub_name, gp.PRJ_TYPE, ghl.SAVE_YN
     FROM gxd.tb_expr_seq_header tesh
     INNER JOIN gxd.gc_qc_sample gqs
     ON tesh.run_id = gqs.run_id

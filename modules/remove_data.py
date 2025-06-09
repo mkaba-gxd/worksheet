@@ -358,9 +358,14 @@ def remove_data(args):
     sample = args.sample
     anal_dir = args.analysis_dir
 
-    subDir, anal_type = getbatch(sample, anal_dir)
+    subDir, anal_type, save_flag = getbatch(sample, anal_dir)
     anaDir = os.path.join(anal_dir, anal_type, subDir, sample)
 
+    if save_flag == 'Y' :
+        choice = prompt_choice("Comfirmed sample. Would you like to continue editing? (edit[E]/quit[Q]): ", ['edit', 'e', 'quit', 'q'])
+        if choice in ['quit', 'q']:
+            init('Suspend processing.')
+ 
     if subDir is None :
         init('No registration in database')
     if not os.path.isdir(os.path.join(anaDir,'Summary')) :

@@ -1,17 +1,9 @@
 import os
-import sys
 import glob
 import shutil
 import subprocess
 import pandas as pd
-from pathlib import Path
 from .commom import *
-
-def prompt_choice(prompt, choices):
-    while True:
-        ans = input(prompt).strip().lower()
-        if ans in choices:
-            return ans
 
 def generate_backup_path(file_path):
     base, ext = os.path.splitext(file_path)

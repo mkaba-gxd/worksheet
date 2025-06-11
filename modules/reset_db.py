@@ -1,10 +1,6 @@
 import os
-import sys
 import pymysql
-import warnings
 import datetime
-import pandas as pd
-from pathlib import Path
 from .commom import *
 
 def reset_ewes(sample, status):

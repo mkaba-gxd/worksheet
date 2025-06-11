@@ -87,6 +87,12 @@ def subname_query(sample):
     """
     return query
 
+def prompt_choice(prompt, choices):
+    while True:
+        ans = input(prompt).strip().lower()
+        if ans in choices:
+            return ans
+
 def init(msg):
     print(msg)
     sys.exit()

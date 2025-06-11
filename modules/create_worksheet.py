@@ -1,19 +1,11 @@
 import os
-import sys
 import pandas as pd
 import numpy as np
 import openpyxl
 import datetime
-import warnings
 import shutil
 from pathlib import Path
 from .commom import *
-
-def prompt_choice(prompt, choices):
-    while True:
-        ans = input(prompt).strip().lower()
-        if ans in choices:
-            return ans
 
 def create_worksheet(args):
 

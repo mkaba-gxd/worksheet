@@ -77,7 +77,7 @@ worksheet CH -fc <flowcellid>
 - rawdataに格納されているSampleSheetの内容と、DBに登録されている検体情報が一致することを確認する。
 - analysis statusを調べて解析の進捗を表示する。
 - report.jsonとreport.pdfが作成されていることを確認する。
-- \<LINKDIR\>に作成済みreport.pdfのシンボリックリンクを作成する。
+- \<LINKDIR\>にパイプラインで作成された report.pdf のシンボリックリンクを作成する。
 ### オプションの詳細
 ```
 $ worksheet check -h

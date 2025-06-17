@@ -10,8 +10,8 @@ CAP検査（eWES/WTS）DRY工程作業で使用するワークシートの新規
 
 ## 0\. 準備
 エイリアスを作成する。※ 初回のみ（gxd_pipeline, guest_user ユーザーには実装済み）\
-~/bin フォルダを作成し、以下のコマンドを記載したテキストファイル worksheet を作成し、実行権限を付与する。\
-エイリアスを作成しない場合は、singularity でコンテナを指定して実行する。
+~/bin フォルダ直下に以下のコマンドを記載したテキストファイル worksheet を作成し、実行権限を付与する。\
+エイリアスを作成しない場合は、singularity でコンテナとスクリプトファイルを指定して実行する。
 ```
 singularity exec --disable-cache --bind /data1 /data1/labTools/labTools.sif python /data1/labTools/worksheet/latest/worksheet.py $@
 ```

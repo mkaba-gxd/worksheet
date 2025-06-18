@@ -1,5 +1,6 @@
 # worksheet ツール
 CAP検査（eWES/WTS）DRY工程作業で使用するワークシートの新規作成、シートの追加、解析の進捗確認を行う。
+指定されたflowcell IDやsample IDを用いてデータベースで検索し、検体情報を取得するため、データベースに登録がない検体に対しては実行できません。
 | command      | 概要                                                     |
 |:-------------|:--------------------------------------------------------|
 |create, CR    |ワークシートの新規作成                                     |
@@ -106,6 +107,7 @@ optional arguments:
 |--novadir/-n      |False    |NGSデータ転送先フォルダ              |/data1/gxduser/novaseqx |
 
 ## 3\. シートの追加
+createコマンドでワークシートを作成してから実行すること。
 ```
 worksheet addition --flowcellid <flowcellid>
 worksheet ADD -fc <flowcellid>

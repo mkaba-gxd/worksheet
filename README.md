@@ -48,7 +48,7 @@ worksheet CR -fc <flowcellid>
 
 <details>
   <summary> 
-    Instructions
+    More Details
   </summary>
 
 ### オプションの詳細
@@ -84,7 +84,7 @@ worksheet CH -fc <flowcellid>
 ```
 <details>
   <summary> 
-    Instructions
+    More Details
   </summary>
   
 ### オプションの詳細
@@ -128,7 +128,7 @@ worksheet ADD -fc <flowcellid>
 ```
 <details>
   <summary> 
-    Instructions
+    More Details
   </summary>
   
 ### オプションの詳細
@@ -170,7 +170,7 @@ worksheet RM -s <sample ID>
 ```
 <details>
   <summary> 
-    Instructions
+    More Details
   </summary>
   
 ### オプションの詳細
@@ -215,7 +215,7 @@ worksheet RE -s <sampleid> -t [100/101/102]
 ```
 <details>
   <summary> 
-    Instructions
+    More Details
   </summary>
 
 ### オプションの詳細

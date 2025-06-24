@@ -9,10 +9,11 @@ CAP検査（eWES/WTS）DRY工程作業で使用するワークシートの新規
 |remove, RM    |解析結果の編集（Summaryファイルの行削除）とrerun.shの作成    |
 |reset, RE     |データベースに登録済みの解析結果の削除とanalysis statusの変更 |
 
-## 0\. 準備
-エイリアスを作成する。※ 初回のみ（gxd_pipeline, guest_user ユーザーには実装済み）\
+## エイリアスの作成 ※初回のみ 
 ~/bin フォルダ直下に以下のコマンドを記載したテキストファイル worksheet を作成し、実行権限を付与する。\
+（gxd_pipeline, guest_user ユーザーには実装済み）\
 エイリアスを作成しない場合は、singularity でコンテナとスクリプトファイルを指定して実行する。
+
 ```
 singularity exec --disable-cache --bind /data1 /data1/labTools/labTools.sif python /data1/labTools/worksheet/latest/worksheet.py $@
 ```

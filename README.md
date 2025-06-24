@@ -43,6 +43,14 @@ optional arguments:
 worksheet create --flowcellid <flowcellid>
 worksheet CR -fc <flowcellid>
 ```
+\<OUTDIR\>にワークシートを作成する。同名のファイルがある場合は上書きするかどうか選択する。\
+\<DIRECTORY\>に解析フォルダが作成されてから実行すること。
+
+<details>
+  <summary> 
+    Instructions
+  </summary>
+
 ### オプションの詳細
 ```
 $ worksheet create -h
@@ -67,19 +75,18 @@ optional arguments:
 |--project_type/-t |False    |解析種別。both,eWES,WTSから選択する  |both                  |
 |--outdir/-o       |False    |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet |
 
-\<OUTDIR\>にワークシートを作成する。同名のファイルがある場合は上書きするかどうか選択する。\
-\<DIRECTORY\>に解析フォルダが作成されてから実行すること。
+</details>
 
 ## 2\. 解析の進捗確認
 ```
 worksheet check --flowcellid <flowcellid>
 worksheet CH -fc <flowcellid>
 ```
-以下の挙動をとる。
-- rawdataに格納されているSampleSheetの内容と、DBに登録されている検体情報が一致することを確認する。
-- analysis statusを調べて解析の進捗を表示する。
-- report.jsonとreport.pdfが作成されていることを確認する。
-- \<LINKDIR\>にパイプラインで作成された report.pdf のシンボリックリンクを作成する。
+<details>
+  <summary> 
+    Instructions
+  </summary>
+  
 ### オプションの詳細
 ```
 $ worksheet check -h
@@ -107,15 +114,23 @@ optional arguments:
 |--linkDir/-l      |False    |PDFレポートのリンク先ディレクトリへのパス|/data1/work/report  |
 |--novadir/-n      |False    |NGSデータ転送先フォルダ              |/data1/gxduser/novaseqx |
 
+</details>
+
 ## 3\. シートの追加
+作成済のワークシートに以下の情報を項目別にまとめたシートを追加する。
+- QC情報（OncoStationに掲載される項目。WETのQCも含む）
+- レポートに記載される解析結果（Summaryフォルダに格納された summarized.\*.tsv から収集）\
+  
 createコマンドでワークシートを作成してから実行すること。
 ```
 worksheet addition --flowcellid <flowcellid>
 worksheet ADD -fc <flowcellid>
 ```
-作成済のワークシートに以下の情報を項目別にまとめたシートを追加する。
-- QC情報（OncoStationに掲載される項目。WETのQCも含む）
-- レポートに記載される解析結果（Summaryフォルダに格納された summarized.\*.tsv から収集）
+<details>
+  <summary> 
+    Instructions
+  </summary>
+  
 ### オプションの詳細
 ```
 $ worksheet addition -h
@@ -140,19 +155,24 @@ optional arguments:
 |--project_type/-t |False    |解析種別。both,eWES,WTSから選択する  |both                 |
 |--outdir/-o       |False    |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet|
 
+</details>
+
 解析途中の検体があった場合は、操作の継続を聞かれるので選択する。\
 **継続する場合は、解析中の検体情報は記載されない**ので、全検体の解析が終了した後に再度実行してQC情報が確認できるようにしておく。\
 なお、再実行時した場合は work_sheet, sample_info 以外のシートは上書きされる。
 
 ## 4\. 解析結果の編集（削除）
+指定された sample ID について、解析フォルダに格納されているsummaryファイルの不要な行を削除する。\
+解析フォルダ内データの書き換えを行うので **gxd_pipeline ユーザーで実行すること。**
 ```
 worksheet remove --sample <sample ID>
 worksheet RM -s <sample ID>
 ```
-対話型プログラムなので、表示される内容に応じて編集する内容を入力する。\
-指定された sample ID について、解析フォルダに格納されているsummaryファイルの不要な行を削除する。\
-可能な編集は行削除（変異の削除）のみなので、解析結果内容の一部を修正する場合はsummaryファイルを手動で編集してレポートの再作成を実施する。\
-解析フォルダ内データの書き換えを行うので **gxd_pipeline ユーザーで実行すること。**
+<details>
+  <summary> 
+    Instructions
+  </summary>
+  
 ### オプションの詳細
 ```
 $ worksheet remove -h
@@ -182,11 +202,22 @@ optional arguments:
 - Genomic Signatures(MSI/TMB), SNV/InDel with Insufficient Depth は未対応。
 - CNV は Intermediate の遺伝子も含めて指定可。
 
+対話型プログラムなので、表示される内容に応じて編集する内容を入力する。\
+可能な編集は行削除（変異の削除）のみなので、解析結果内容の一部を修正する場合はsummaryファイルを**手作業で**編集してレポートの再作成を実施する。\
+[詳しくはこちら](https://github.com/mkaba-gxd/special-case/blob/main/README.md#case4)
+
+</details>
+
 ## 5\. データベースのリセット
 ```
 worksheet reset --sample <sampleid> --status [100/101/102]
 worksheet RE -s <sampleid> -t [100/101/102]
 ```
+<details>
+  <summary> 
+    Instructions
+  </summary>
+
 ### オプションの詳細
 ```
 $ worksheet reset -h
@@ -212,3 +243,5 @@ optional arguments:
 指定された SampleID が Comfirm 実行済だった場合、**statusは変更しない**。その他の変更を行うかどうか聞かれるので選択する。\
 --status オプションで解析ステータスを変更する。 100:解析前, 101:解析中, 102:解析完了 \
 **100を指定した場合はcronによる再解析が行われる。** なお、指定しない場合は解析ステータスを変更しない。
+
+</details>

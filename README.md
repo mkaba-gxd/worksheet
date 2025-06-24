@@ -39,12 +39,12 @@ optional arguments:
 ```
 
 ## 1\. ワークシートの作成
+\<OUTDIR\>にワークシートを作成する。同名のファイルがある場合は上書きするかどうか選択する。\
+\<DIRECTORY\>に解析フォルダが作成されてから実行すること。
 ```
 worksheet create --flowcellid <flowcellid>
 worksheet CR -fc <flowcellid>
 ```
-\<OUTDIR\>にワークシートを作成する。同名のファイルがある場合は上書きするかどうか選択する。\
-\<DIRECTORY\>に解析フォルダが作成されてから実行すること。
 
 <details>
   <summary> 
@@ -209,6 +209,7 @@ optional arguments:
 </details>
 
 ## 5\. データベースのリセット
+指定された SampleID について、データベースに登録された解析結果を削除し、解析フォルダにPDF/JSONが存在する場合はリネームする。
 ```
 worksheet reset --sample <sampleid> --status [100/101/102]
 worksheet RE -s <sampleid> -t [100/101/102]
@@ -239,7 +240,6 @@ optional arguments:
 |--status/-t       |False    |analysis status を指定する。100:解析前, 101:解析中, 102:解析完了, None(オプションなし):変更しない |None |
 |--analysis_dir/-d |False    |解析フォルダの親ディレクトリへのパス |/data1/data/result |
 
-指定された SampleID について、データベースに登録された解析結果を削除し、解析フォルダにPDF/JSONが存在する場合はリネームする。\
 指定された SampleID が Comfirm 実行済だった場合、**statusは変更しない**。その他の変更を行うかどうか聞かれるので選択する。\
 --status オプションで解析ステータスを変更する。 100:解析前, 101:解析中, 102:解析完了 \
 **100を指定した場合はcronによる再解析が行われる。** なお、指定しない場合は解析ステータスを変更しない。

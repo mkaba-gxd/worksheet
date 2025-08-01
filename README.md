@@ -2,13 +2,14 @@
 CAP検査（eWES/WTS）DRY工程作業で使用するワークシートの新規作成、シートの追加、解析の進捗確認を行う。
 指定されたflowcell IDやsample IDを用いてデータベースで検索し、検体情報を取得するため、データベースに登録がない検体に対しては実行できません。\
 **また、データベースの設計内容が不明なため、データベース検索時に想定外の動作を行う可能性があります。**
-| command             | 概要                                                     |
-|:--------------------|:--------------------------------------------------------|
-|[create, CR](#CR)    |ワークシートの新規作成                                     |
-|[check, CH](#CH)     |解析の進捗確認                                            |
-|[addition, ADD](#ADD) |ワークシートに解析情報を記載したシートを追加                 |
-|[remove, RM](#RM)    |解析結果の編集（Summaryファイルの行削除）とrerun.shの作成    |
-|[reset, RE](#RE)     |データベースに登録済みの解析結果の削除とanalysis statusの変更 |
+| command              | 概要                                                     |
+|:---------------------|:---------------------------------------------------------|
+|[create, CR](#CR)     |ワークシートの新規作成                                    |
+|[check, CH](#CH)      |解析の進捗確認                                            |
+|[addition, ADD](#ADD) |ワークシートに解析情報を記載したシートを追加              |
+|[remove, RM](#RM)     |解析結果の編集（Summaryファイルの行削除）とrerun.shの作成 |
+|[reset, RE](#RE)      |データベースに登録済みの解析結果の削除とanalysis statusの変更 |
+|[link, LNK](#LNK)     |OncoStationで作成されたPDFレポートのリンクを作成する      |
 
 ## エイリアスの作成 ※初回のみ 
 ~/bin フォルダ直下に以下のコマンドを記載したテキストファイル worksheet を作成し、実行権限を付与する。\
@@ -21,18 +22,19 @@ singularity exec --disable-cache --bind /data1 /data1/labTools/labTools.sif pyth
 helpページを表示してエイリアスの設定を確認する。以下が表示されればOK。
 ```
 $ worksheet --help
-version: v3.0.0
-usage: worksheet.py [-h] [--version] {create,CR,check,CH,addition,ADD,remove,RM,reset,RE} ...
+version: v3.1.0
+usage: worksheet.py [-h] [--version] {create,CR,check,CH,addition,ADD,remove,RM,reset,RE,link,LNK} ...
 
 Created and added worksheet and checked processes.
 
 positional arguments:
-  {create,CR,check,CH,addition,ADD,remove,RM,reset,RE}
+  {create,CR,check,CH,addition,ADD,remove,RM,reset,RE,link,LNK}
     create (CR)         create worksheet
     check (CH)          check progress
     addition (ADD)      additional worksheet
     remove (RM)         delete the analysis results
     reset (RE)          reset database
+    link (LNK)          create report.pdf link
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -55,10 +57,10 @@ worksheet CR -fc <flowcellid>
 
 ### オプションの詳細
 ```
-$ worksheet create -h
-version: v3.0.0
-usage: worksheet.py create [-h] --flowcellid FLOWCELLID [--directory DIRECTORY]
+version: v3.1.0
+usage: worksheet.py create [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] 
                            [--project_type {both,WTS,eWES}] [--outdir OUTDIR]
+
 optional arguments:
   -h, --help            show this help message and exit
   --flowcellid FLOWCELLID, -fc FLOWCELLID
@@ -93,9 +95,9 @@ worksheet CH -fc <flowcellid>
 ### オプションの詳細
 ```
 $ worksheet check -h
-version: v3.0.0
-usage: worksheet.py check [-h] --flowcellid FLOWCELLID [--directory DIRECTORY]
-                          [--project_type {both,WTS,eWES}] [--linkDir LINKDIR] [--novadir NOVADIR]
+version: v3.1.0
+usage: worksheet.py check [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}] [--novadir NOVADIR]
+
 optional arguments:
   -h, --help            show this help message and exit
   --flowcellid FLOWCELLID, -fc FLOWCELLID
@@ -104,8 +106,6 @@ optional arguments:
                         parent analytical directory (default: /data1/data/result)
   --project_type {both,WTS,eWES}, -t {both,WTS,eWES}
                         project type (default: both)
-  --linkDir LINKDIR, -l LINKDIR
-                        Linked directory of report files (default: /data1/work/report)
   --novadir NOVADIR, -n NOVADIR
                         novaseq directory (default: /data1/gxduser/novaseqx)
 ```
@@ -114,7 +114,6 @@ optional arguments:
 |--flowcellid/-fc  |True     |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字 |None |
 |--directory/-d    |False    |解析フォルダの親ディレクトリへのパス |/data1/data/result      |
 |--project_type/-t |False    |解析種別。both,eWES,WTSから選択する |both                   |
-|--linkDir/-l      |False    |PDFレポートのリンク先ディレクトリへのパス|/data1/work/report  |
 |--novadir/-n      |False    |NGSデータ転送先フォルダ              |/data1/gxduser/novaseqx |
 
 </details>
@@ -138,9 +137,10 @@ worksheet ADD -fc <flowcellid>
 ### オプションの詳細
 ```
 $ worksheet addition -h
-version: v3.0.0
-usage: worksheet.py addition [-h] --flowcellid FLOWCELLID [--directory DIRECTORY]
-                             [--project_type {both,WTS,eWES}] [--outdir OUTDIR]
+version: v3.1.0
+usage: worksheet.py addition [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}]
+                             [--outdir OUTDIR]
+
 optional arguments:
   -h, --help            show this help message and exit
   --flowcellid FLOWCELLID, -fc FLOWCELLID
@@ -181,7 +181,7 @@ worksheet RM -s <sample ID>
 ### オプションの詳細
 ```
 $ worksheet remove -h
-version: v3.0.0
+version: v3.1.0
 usage: worksheet.py remove [-h] --sample SAMPLE [--analysis_dir ANALYSIS_DIR]
 
 optional arguments:
@@ -228,7 +228,7 @@ worksheet RE -s <sampleid> -t [100/101/102]
 ### オプションの詳細
 ```
 $ worksheet reset -h
-version: v3.0.0
+version: v3.1.0
 usage: worksheet.py reset [-h] --sample SAMPLE [--status {100,101,102,None}] [--analysis_dir ANALYSIS_DIR]
 
 optional arguments:
@@ -251,3 +251,43 @@ optional arguments:
 **100を指定した場合はcronによる再解析が行われる。** なお、指定しない場合は解析ステータスを変更しない。
 
 </details>
+
+<a id="LNK"></a>
+## 6\. PDFレポートファイルのリンク作成
+```
+worksheet link --flowcellid <flowcellid>
+worksheet LNK -fc <flowcellid>
+```
+<details>
+  <summary>
+    More Details
+  </summary>
+
+### オプションの詳細
+```
+$ worksheet link -h
+version: v3.1.0
+usage: worksheet.py link [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}] [--linkDir LINKDIR]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --flowcellid FLOWCELLID, -fc FLOWCELLID
+                        flowcell id (default: None)
+  --directory DIRECTORY, -d DIRECTORY
+                        parent analytical directory (default: /data1/data/result)
+  --project_type {both,WTS,eWES}, -t {both,WTS,eWES}
+                        project type (default: both)
+  --linkDir LINKDIR, -l LINKDIR
+                        Linked directory of report files (default: /data1/work/report)
+```
+| option           |required | 概要           |default         |
+|:-----------------|:-------:|:---------------|:---------------|
+|--flowcellid/-fc  |True     |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字   |None |
+|--directory/-d    |False    |解析フォルダの親ディレクトリへのパス  |/data1/data/result    |
+|--project_type/-t |False    |解析種別。both,eWES,WTSから選択する  |both                   |
+|--linkDir/-l      |False    |PDFレポートのリンク先ディレクトリへのパス|/data1/work/report |
+
+</details>
+
+
+

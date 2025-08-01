@@ -169,7 +169,7 @@ def del_alt_express(sample):
     return query
 
 
-def reset_db(args):
+def run_reset(args):
 
     sample = args.sample
     anal_dir = args.analysis_dir

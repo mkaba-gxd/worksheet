@@ -390,7 +390,7 @@ class ADD_STAT:
                             ws.column_dimensions[col_letter].width = max_length + 5
 
 
-def additional_worksheet(args):
+def run_add(args):
 
     thfile = os.path.join(os.path.dirname(__file__), 'thresholds.tsv')
     assert os.path.isfile(thfile)

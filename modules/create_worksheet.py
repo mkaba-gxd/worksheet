@@ -7,7 +7,7 @@ import shutil
 from pathlib import Path
 from .commom import *
 
-def create_worksheet(args):
+def run_create(args):
 
     flowcellid = args.flowcellid
     directory = args.directory

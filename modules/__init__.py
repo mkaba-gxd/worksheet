@@ -4,16 +4,14 @@ from .create_worksheet import *
 from .check_progress import *
 from .reset_db import *
 from .remove_data import *
+from .create_link import *
 
 __all__ = [
-#    "getinfo",
-#    "SelectData",
-#    "fcDir_table",
-#    "init",
-    "create_worksheet",
-    "check_progress",
-    "additional_worksheet",
-    "reset_db",
-    "remove_data"
+    "run_create",
+    "run_check",
+    "run_add",
+    "run_remove",
+    "run_reset",
+    "run_report"
     ]
 

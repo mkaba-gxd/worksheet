@@ -4,22 +4,7 @@ import argparse
 from pathlib import Path
 from modules import *
 
-VERSION = "v3.0.0"
-
-def run_create(args):
-    create_worksheet(args)
-
-def run_check(args):
-    check_progress(args)
-
-def run_add(args):
-    additional_worksheet(args)
-
-def run_remove(args):
-    remove_data(args)
-
-def run_reset(args):
-    reset_db(args)
+VERSION = "v3.1.0"
 
 def main():
 
@@ -45,7 +30,6 @@ def main():
     parser_ch.add_argument("--flowcellid","-fc", required=True, help="flowcell id")
     parser_ch.add_argument("--directory","-d", required=False, help="parent analytical directory", default="/data1/data/result")
     parser_ch.add_argument("--project_type","-t", required=False, help="project type", default="both", choices=["both","WTS","eWES"])
-    parser_ch.add_argument("--linkDir","-l", required=False, help="Linked directory of report files", default="/data1/work/report")
     parser_ch.add_argument("--novadir","-n", required=False, help="novaseq directory", default="/data1/gxduser/novaseqx")
     parser_ch.set_defaults(func=run_check)
 
@@ -60,7 +44,6 @@ def main():
     # Edit (delete) the analysis results.
     parser_rm = subparsers.add_parser("remove", aliases=['RM'], help="delete the analysis results", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser_rm.add_argument("--sample","-s", required=True, help="sample id")
-#    parser_rm.add_argument("--item","-i", required=True, help="Item to be edited", choices=["SNV","FS","AS"])
     parser_rm.add_argument("--analysis_dir","-d", required=False, help="parent analytical directory", default="/data1/data/result")
     parser_rm.set_defaults(func=run_remove)
 
@@ -70,6 +53,14 @@ def main():
     parser_re.add_argument("--status","-t", required=False, help='Specify the analysis status. If not changed, not specified.', default=None, choices=['100','101','102',None])
     parser_re.add_argument("--analysis_dir","-d", required=False, help="parent analytical directory", default="/data1/data/result")
     parser_re.set_defaults(func=run_reset)
+
+    # link report
+    parser_lk = subparsers.add_parser("link", aliases=["LNK"], help="create report.pdf link", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser_lk.add_argument("--flowcellid","-fc", required=True, help="flowcell id")
+    parser_lk.add_argument("--directory","-d", required=False, help="parent analytical directory", default="/data1/data/result")
+    parser_lk.add_argument("--project_type","-t", required=False, help="project type", default="both", choices=["both","WTS","eWES"])
+    parser_lk.add_argument("--linkDir","-l", required=False, help="Linked directory of report files", default="/data1/work/report")
+    parser_lk.set_defaults(func=run_report)
 
     args = parser.parse_args()
     args.func(args)

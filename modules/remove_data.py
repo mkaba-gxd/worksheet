@@ -345,7 +345,7 @@ def remove_wts(sample, anaDir):
         target = input("Which additional items would you like to edit? [FS/AS/quit[Q]]: ").strip().lower()
 
 
-def remove_data(args):
+def run_remove(args):
 
     sample = args.sample
     anal_dir = args.analysis_dir

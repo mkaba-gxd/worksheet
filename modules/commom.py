@@ -19,7 +19,7 @@ def getinfo(fc_id):
 
 def SelectData(fc_id):
     query = f"""
-    SELECT tesh.run_id, concat(tesh.equip_side, tesh.fc_id) AS sub_name, gp.PRJ_TYPE, ghl.ANAL_STATUS, gp.SAMPLE_ID, gp.PATIENT_NO, gp.DIAGNOSIS_NAME, gp.AGE, gp.GENDER, gqs.INDEX1_SEQUENCE, gqs.INDEX2_SEQUENCE
+    SELECT tesh.run_id, concat(tesh.equip_side, tesh.fc_id) AS sub_name, gp.PRJ_TYPE, ghl.ANAL_STATUS, ghl.REPORT_URL, gp.SAMPLE_ID, gp.PATIENT_NO, gp.DIAGNOSIS_NAME, gp.AGE, gp.GENDER, gqs.INDEX1_SEQUENCE, gqs.INDEX2_SEQUENCE
     FROM gxd.tb_expr_seq_header tesh
     INNER JOIN gxd.gc_qc_sample gqs
     ON tesh.run_id = gqs.run_id
@@ -46,10 +46,10 @@ def fcDir_table(df, novaseqDir: Path):
     return df
 
 def SearchDir(batchID, novaseqDir : Path):
+
     fcDirs = [fcDir for fcDir in novaseqDir.iterdir() if fcDir.name.endswith(batchID)]
     fcDirs.sort()
     if len(fcDirs) != 1: return None
-
     return os.path.basename(fcDirs[-1])
 
 def getbatch(sample, anal_dir):

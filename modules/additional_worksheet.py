@@ -239,11 +239,11 @@ class ADD_QC :
                     ws0 = writer.sheets['work_sheet']
 
                     if item['PRJ_TYPE'] == 'eWES':
-                        ws0["K26"] = sum(np.isin(list(set(COMMENTS_DRY)), temp_qc.index[temp_qc['CTRL']=='']))
-                        ws0["N26"] = sum(np.isin(list(set(COMMENTS_WET)), temp_qc.index[temp_qc['CTRL']=='']))
+                        ws0["K23"] = sum(np.isin(list(set(COMMENTS_DRY)), temp_qc.index[temp_qc['CTRL']=='']))
+                        ws0["N23"] = sum(np.isin(list(set(COMMENTS_WET)), temp_qc.index[temp_qc['CTRL']=='']))
                     elif item['PRJ_TYPE'] == 'WTS':
-                        ws0["K25"] = sum(np.isin(list(set(COMMENTS_DRY)), temp_qc.index[temp_qc['CTRL']=='']))
-                        ws0["N25"] = sum(np.isin(list(set(COMMENTS_WET)), temp_qc.index[temp_qc['CTRL']=='']))
+                        ws0["K22"] = sum(np.isin(list(set(COMMENTS_DRY)), temp_qc.index[temp_qc['CTRL']=='']))
+                        ws0["N22"] = sum(np.isin(list(set(COMMENTS_WET)), temp_qc.index[temp_qc['CTRL']=='']))
 
 
 class ADD_STAT:

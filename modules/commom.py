@@ -61,7 +61,7 @@ def getbatch(sample, anal_dir):
 
         subname = tbl.sub_name[0]
         anal_type = tbl.PRJ_TYPE[0]
-        save_flag = tbl.SAVE_YN[0]
+        save_flag = tbl.REPORT_CREATE_YN[0]
         if anal_type == 'EWES' : anal_type = 'eWES'
         anal_dir = Path(os.path.join(anal_dir, anal_type))
         fcDirs = [fcDir for fcDir in anal_dir.iterdir() if fcDir.name.endswith(subname)]
@@ -74,7 +74,7 @@ def getbatch(sample, anal_dir):
 
 def subname_query(sample):
     query = f"""
-    SELECT concat(tesh.equip_side, tesh.fc_id) AS sub_name, gp.PRJ_TYPE, ghl.SAVE_YN
+    SELECT concat(tesh.equip_side, tesh.fc_id) AS sub_name, gp.PRJ_TYPE, ghl.REPORT_CREATE_YN
     FROM gxd.tb_expr_seq_header tesh
     INNER JOIN gxd.gc_qc_sample gqs
     ON tesh.run_id = gqs.run_id

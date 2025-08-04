@@ -354,8 +354,8 @@ class ADD_STAT:
                 continue
 
             tmp_info = df_info[ (df_info['seqDir'] == item1['seqDir']) & (df_info['PRJ_TYPE'] == item1['PRJ_TYPE']) ]
-            tmp_info = tmp_info[ ~tmp_info['SAMPLE_ID'].str.contains(PC, case=False, regex=False) ]
-            tmp_info = tmp_info[ ~tmp_info['SAMPLE_ID'].str.contains(NC, case=False, regex=False) ]
+#            tmp_info = tmp_info[ ~tmp_info['SAMPLE_ID'].str.contains(PC, case=False, regex=False) ]
+#            tmp_info = tmp_info[ ~tmp_info['SAMPLE_ID'].str.contains(NC, case=False, regex=False) ]
 
             tmp_dict = {}
             for j, item2 in tmp_info.iterrows():

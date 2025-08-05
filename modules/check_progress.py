@@ -65,12 +65,30 @@ def check_files(df, analDir:Path, type):
         print (type.upper() + ' all created')
         return True
 
+def create_link(df, analDir:Path, linkDir:Path):
+    FILES = glob.glob(str(analDir) + '/*/Summary/*.report.pdf')
+    d = dict(zip([ p.split("/")[-1].split('.')[0] for p in FILES ], FILES))
+    FAIL = list()
+    for sample in df['SAMPLE_ID'] :
+        if os.path.isfile(d[sample]):
+            if os.path.islink(str(linkDir) + '/' + sample + '.pdf') :
+                os.remove(str(linkDir) + '/' + sample + '.pdf')
+            elif os.path.isfile(str(linkDir) + '/' + sample + '.pdf') :
+                os.remove(str(linkDir) + '/' + sample + '.pdf')
+            os.symlink(d[sample], str(linkDir) + '/' + sample + '.pdf')
+        else:
+            FAIL.append(sample)
+
+    if len(FAIL) > 0 :
+        print ('Could not create symbolic link: ' + ','.join(FAIL))
+
 def run_check(args):
 
     flowcellid = args.flowcellid
     directory = args.directory
     project_type = args.project_type
     novadir = args.novadir
+    linkDir = args.linkDir
 
     df_info = getinfo(flowcellid)
     if df_info.shape[0] == 0 : init('no applicable specimens.')
@@ -115,4 +133,9 @@ def run_check(args):
         if df_prj.shape[0] == 0 : continue
         flag = check_files(df_prj, anal_dir, 'json')
         flag = check_files(df_prj, anal_dir, 'pdf')
+
+        if flag :
+            linkDir_add = linkDir + '/' + pj_type + '/' + os.path.basename(anal_dir)
+            os.makedirs(linkDir_add, exist_ok=True)
+            create_link(df_prj, anal_dir, Path(linkDir_add))
 

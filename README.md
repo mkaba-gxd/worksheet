@@ -97,6 +97,7 @@ worksheet CH -fc <flowcellid>
 $ worksheet check -h
 version: v3.1.0
 usage: worksheet.py check [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}] [--novadir NOVADIR]
+                          [--linkDir LINKDIR]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -108,13 +109,16 @@ optional arguments:
                         project type (default: both)
   --novadir NOVADIR, -n NOVADIR
                         novaseq directory (default: /data1/gxduser/novaseqx)
+  --linkDir LINKDIR, -l LINKDIR
+                        Linked directory of report files (default: /data1/work/report)
 ```
 | option           |required | 概要           |default         |
 |:-----------------|:-------:|:---------------|:---------------|
 |--flowcellid/-fc  |True     |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字 |None |
 |--directory/-d    |False    |解析フォルダの親ディレクトリへのパス |/data1/data/result      |
-|--project_type/-t |False    |解析種別。both,eWES,WTSから選択する |both                   |
+|--project_type/-t |False    |解析種別。both,eWES,WTSから選択する  |both                    |
 |--novadir/-n      |False    |NGSデータ転送先フォルダ              |/data1/gxduser/novaseqx |
+|--linkDir/-l      |False    |PDFレポートのリンク先ディレクトリへのパス |/data1/work/report |
 
 </details>
 
@@ -154,10 +158,10 @@ optional arguments:
 ```
 | option           |required | 概要           |default         |
 |:-----------------|:-------:|:---------------|:---------------|
-|--flowcellid/-fc  |True     |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字  |None |
-|--directory/-d    |False    |解析フォルダの親ディレクトリへのパス  |/data1/data/result   |
-|--project_type/-t |False    |解析種別。both,eWES,WTSから選択する  |both                 |
-|--outdir/-o       |False    |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet|
+|--flowcellid/-fc  |True     |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字   |None |
+|--directory/-d    |False    |解析フォルダの親ディレクトリへのパス  |/data1/data/result    |
+|--project_type/-t |False    |解析種別。both,eWES,WTSから選択する   |both                  |
+|--outdir/-o       |False    |ワークシート出力先ディレクトリへのパス|/data1/work/workSheet |
 
 </details>
 

@@ -31,6 +31,7 @@ def main():
     parser_ch.add_argument("--directory","-d", required=False, help="parent analytical directory", default="/data1/data/result")
     parser_ch.add_argument("--project_type","-t", required=False, help="project type", default="both", choices=["both","WTS","eWES"])
     parser_ch.add_argument("--novadir","-n", required=False, help="novaseq directory", default="/data1/gxduser/novaseqx")
+    parser_ch.add_argument("--linkDir","-l", required=False, help="Linked directory of report files", default="/data1/work/report")
     parser_ch.set_defaults(func=run_check)
 
     # additional worksheet

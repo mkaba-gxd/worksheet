@@ -263,6 +263,7 @@ optional arguments:
 
 <a id="LNK"></a>
 ## 6\. PDFレポートファイルのリンク作成
+Comfirm済の検体について、OncoStationで作成されたPDFファイルのシンボリックリンクを作成する。
 ```
 worksheet link --flowcellid <flowcellid>
 worksheet LNK -fc <flowcellid>

@@ -135,7 +135,7 @@ def run_check(args):
         flag = check_files(df_prj, anal_dir, 'pdf')
 
         if flag :
-            linkDir_add = linkDir + '/' + pj_type + '/' + os.path.basename(anal_dir)
+            linkDir_add = linkDir + '/' + pj_type + '/' + os.path.basename(anal_dir) + '/PL'
             os.makedirs(linkDir_add, exist_ok=True)
             create_link(df_prj, anal_dir, Path(linkDir_add))
 

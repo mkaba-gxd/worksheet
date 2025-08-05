@@ -38,7 +38,7 @@ def run_report(args):
             print(pj_type + ': Analysis folder not created.')
             continue
 
-        linkDir_add = linkDir + '/' + pj_type + '/' + os.path.basename(anal_dir)
+        linkDir_add = linkDir + '/' + pj_type + '/' + os.path.basename(anal_dir) + '/OST'
         os.makedirs(linkDir_add, exist_ok=True)
         for i, item in df_prj.iterrows() :
             rawRepo = os.path.join(repDir, item['REPORT_URL'])

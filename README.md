@@ -57,6 +57,7 @@ worksheet CR -fc <flowcellid>
 
 ### オプションの詳細
 ```
+$ worksheet create --help
 version: v3.1.0
 usage: worksheet.py create [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] 
                            [--project_type {both,WTS,eWES}] [--outdir OUTDIR]
@@ -83,6 +84,10 @@ optional arguments:
 
 <a id="CH"></a>
 ## 2\. 解析の進捗確認
+- データベースに登録されている検体情報とNGSデータフォルダに格納されているSampleSheet.csvの内容が合致しているかを確認する
+- データベースのANAL_STATUSの値を基に解析の進捗を報告する（100:registered, 101:in progress, 102:finished, 104:reanalysis）
+- report.json, report.pdfを作成済の検体数と、未作成の検体のSample IDを表示する
+- 作成済のreport.pdfのシンボリックリンクを作成する
 ```
 worksheet check --flowcellid <flowcellid>
 worksheet CH -fc <flowcellid>
@@ -94,7 +99,7 @@ worksheet CH -fc <flowcellid>
   
 ### オプションの詳細
 ```
-$ worksheet check -h
+$ worksheet check --help
 version: v3.1.0
 usage: worksheet.py check [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}] [--novadir NOVADIR]
                           [--linkDir LINKDIR]
@@ -140,7 +145,7 @@ worksheet ADD -fc <flowcellid>
   
 ### オプションの詳細
 ```
-$ worksheet addition -h
+$ worksheet addition --help
 version: v3.1.0
 usage: worksheet.py addition [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}]
                              [--outdir OUTDIR]
@@ -184,7 +189,7 @@ worksheet RM -s <sample ID>
   
 ### オプションの詳細
 ```
-$ worksheet remove -h
+$ worksheet remove --help
 version: v3.1.0
 usage: worksheet.py remove [-h] --sample SAMPLE [--analysis_dir ANALYSIS_DIR]
 
@@ -231,7 +236,7 @@ worksheet RE -s <sampleid> -t [100/101/102]
 
 ### オプションの詳細
 ```
-$ worksheet reset -h
+$ worksheet reset --help
 version: v3.1.0
 usage: worksheet.py reset [-h] --sample SAMPLE [--status {100,101,102,None}] [--analysis_dir ANALYSIS_DIR]
 
@@ -269,7 +274,7 @@ worksheet LNK -fc <flowcellid>
 
 ### オプションの詳細
 ```
-$ worksheet link -h
+$ worksheet link --help
 version: v3.1.0
 usage: worksheet.py link [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}] [--linkDir LINKDIR]
 

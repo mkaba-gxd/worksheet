@@ -27,7 +27,7 @@ def run_report(args):
     for pj_type in df_info['PRJ_TYPE'].unique():
 
         df_prj = df_info[df_info['PRJ_TYPE']==pj_type]
-        df_prj = df_prj[df_prj['REPORT_URL'].notna()].reset_index()
+        df_prj = df_prj[df_prj['REPORT_URL'].notna()].reset_index(drop=True)
         if df_prj.shape[0] == 0 :
             print(pj_type + ': No samples have been reported on.')
             continue

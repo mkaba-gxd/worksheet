@@ -185,7 +185,7 @@ def run_reset(args):
     pdf = os.path.join(anal_dir, anal_type, subDir, sample, 'Summary', sample+'.report.pdf')
     json = os.path.join(anal_dir, anal_type, subDir, sample, 'Summary', sample+'.report.json')
 
-    if save_flag is None :
+    if save_flag is not None :
         print("Comfirmed sample. Status cannot be changed.")
         rename = prompt_choice("Rename report files? (yes[Y]/no[N]):", ['yes', 'y', 'no', 'n'])
         choice = prompt_choice("Continue to reset database? (yes[Y]/no[N]):", ['yes', 'y', 'no', 'n'])

@@ -177,7 +177,8 @@ optional arguments:
 <a id="RM"></a>
 ## 4\. 解析結果の編集（削除）
 指定された sample ID について、解析フォルダに格納されているsummaryファイルの不要な行を削除する。\
-解析フォルダ内データの書き換えを行うので **gxd_pipeline ユーザーで実行すること。**
+**この機能だけではデータベースの登録内容は変更されません（＝OSTレポートも変更されません）。** [5.データベースのリセット](#RE) で当該検体の変異情報をデータベースから削除し、手作業またはcronの自動実行を利用して report_json 工程を行い、データベースへ変異を登録すること。\
+解析フォルダ内データの書き換えを行うので **gxd_pipeline ユーザーで実行すること。** \
 ```
 worksheet remove --sample <sample ID>
 worksheet RM -s <sample ID>
@@ -224,7 +225,8 @@ optional arguments:
 
 <a id="RE"></a>
 ## 5\. データベースのリセット
-指定された SampleID について、データベースに登録された解析結果を削除し、解析フォルダにPDF/JSONが存在する場合はリネームする。
+指定された SampleID について、データベースに登録された解析結果を削除し、解析フォルダにPDF/JSONが存在する場合はリネームする。\
+analysis status が 102 の場合は、手作業で report_json 工程を実行してもデータベース登録エラーとなることに注意。
 ```
 worksheet reset --sample <sampleid> --status [100/101/102]
 worksheet RE -s <sampleid> -t [100/101/102]

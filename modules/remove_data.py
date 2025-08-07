@@ -353,7 +353,7 @@ def run_remove(args):
     subDir, anal_type, save_flag = getbatch(sample, anal_dir)
     anaDir = os.path.join(anal_dir, anal_type, subDir, sample)
 
-    if save_flag is None :
+    if save_flag is not None :
         choice = prompt_choice("Comfirmed sample. Would you like to continue editing? (edit[E]/quit[Q]): ", ['edit', 'e', 'quit', 'q'])
         if choice in ['quit', 'q']:
             init('Suspend processing.')

@@ -104,7 +104,7 @@ def run_check(args):
 
         print ('---' + pj_type + '---')
 
-        df_prj = df_info[df_info['PRJ_TYPE']==pj_type].reset_index()
+        df_prj = df_info[df_info['PRJ_TYPE']==pj_type].reset_index(drop=True)
         batch = df_prj['sub_name'][0]
         anal_dir = os.path.join(directory, pj_type, SearchDir(batch, Path(directory + '/' + pj_type)))
         if anal_dir is None:

@@ -46,13 +46,15 @@ optional arguments:
     More Details
   </summary>
   
-  1. ワークシートの[作成](#CR) → /data1/work/workSheet に \<batch_folder\>.[eWES/WTS].xlsx が作成される
-  2. 解析の[進捗を確認](#CH)
+  1. ワークシートの[作成](#CR)\
+      → /data1/work/workSheet に \<batch_folder\>.[eWES/WTS].xlsx が作成される
+  2. 解析の[進捗を確認](#CH)\
+      → /data1/work/report/[eWES/WTS]/\<batch_folder\>/PL/ の下にPipelineで作成されたPDFレポートのリンクが作成される
   3. ワークシートにqc_infoと解析結果のシートを[追加](#ADD)する
   4. ネガコンで変異が検出されなかったことを確認する
   5. ポジコンでワークシートに記載されている変異が検出されていることを確認する
   6. **[工程外手順]** monitoring PRE コマンドでフィルター前データの一覧を作成する\
-     → /data1/work/monitoring/preFilter/\<batch_folder\> の下に [eWES/WTTS].*.xlsx が作成される
+      → /data1/work/monitoring/preFilter/\<batch_folder\> の下に [eWES/WTTS].*.xlsx が作成される
   7. **[工程外手順]** レビュー資料作成手順.pptx に従ってフィルター前データの一覧に情報を追記し、GMに送付する
   8. ワークシートとqc_infoシートを印刷してTRFとともにファイルにまとめ、GMに渡す
   9. レビュー終了後、GMからレポート修正の指示があった場合は以下の手順でレポート修正を行う\
@@ -61,7 +63,7 @@ optional arguments:
      9-3. croneで解析が再実行されるのを待つ、もしくは rerun.sh を手動で実行する\
      9-4. レポート修正の完了をGMに報告する
   10. GMからレポートのアップロード完了の連絡が来たら、OncoStationで作成されたPDFレポートのリンクを[作成](#LNK)する\
-      → /data1/work/report/[eWES/WTS]/\<batch_folder\>/OST/ の下にリンクが作成される
+       → /data1/work/report/[eWES/WTS]/\<batch_folder\>/OST/ の下にリンクが作成される
   11. PDFレポートを印刷する（Oncostationスタンプ,2in1,白黒両面印刷）
   12. server_backup up コマンドでバックアップサーバーへのデータバックアップを実施する
   13. aws_tool up コマンドでAWSへのデータバックアップを実施する

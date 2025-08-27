@@ -2,10 +2,10 @@
 CAP検査（eWES/WTS）DRY工程作業で使用するワークシートの新規作成、シートの追加、解析の進捗確認を行う。
 指定されたflowcell IDやsample IDを用いてデータベースで検索し、検体情報を取得するため、データベースに登録がない検体に対しては実行できません。\
 **また、データベースの設計内容が不明なため、データベース検索時に想定外の動作を行う可能性があります。**
-| command              | 概要                                                     |
-|:---------------------|:---------------------------------------------------------|
-|[create, CR](#CR)     |ワークシートの新規作成                                    |
-|[check, CH](#CH)      |解析の進捗確認                                            |
+| command              | 概要                                                 |
+|:---------------------|:-----------------------------------------------------|
+|[create, CR](#CR)     |ワークシートの新規作成                                  |
+|[check, CH](#CH)      |解析の進捗確認とPipelineで作成されたPDFレポートのリンクを作成する |
 |[addition, ADD](#ADD) |ワークシートに解析情報を記載したシートを追加              |
 |[remove, RM](#RM)     |解析結果の編集（Summaryファイルの行削除）とrerun.shの作成 |
 |[reset, RE](#RE)      |データベースに登録済みの解析結果の削除とanalysis statusの変更 |
@@ -40,6 +40,32 @@ optional arguments:
   -h, --help            show this help message and exit
   --version, -v         show program's version number and exit
 ```
+## 0\. DRY工程の手順
+<details>
+  <summary> 
+    More Details
+  </summary>
+  1. ワークシートの[作成](#CR) → /data1/work/workSheet に \<batch_folder\>.[eWES/WTS].xlsx が作成される。
+  2. 解析の[進捗を確認](#CH)
+  3. ワークシートにqc_infoと解析結果のシートを[追加](#ADD)する
+  4. ネガコンで変異が検出されなかったことを確認する
+  5. ポジコンでワークシートに記載されている変異が検出されていることを確認する
+  6. [工程外の手順] monitoring PRE コマンドでフィルター前データの一覧を作成する → /data1/work/monitoring/preFilter/\<batch_folder\> の下に [eWES/WTTS].*.xlsx が作成される。
+  7. [工程外の手順] レビュー資料作成手順.pptx に従ってフィルター前データの一覧に情報を追記し、GMに送付する
+  8. ワークシートとqc_infoシートを印刷してTRFとともにファイルにまとめ、GMに渡す
+  9. レビュー終了後、GMから指示がレポート修正あった場合は以下の手順でレポート修正を行う\
+     9-1. 解析結果の[編集](#RM) ※ 解析完了時から当該作業時までにPipelineに変更があった場合は rerun.sh を作成して手動実行する\
+     9-2. 解析結果の[削除](#RE) ※ croneでrerunする場合はstatusを100、rerun.shを手動実行する場合は statusを101に指定する\
+     9-3. croneで解析が再実行されるのを待つ、もしくはrerun.shを手動で実行する\
+     9-4. レポート修正の完了をGMに報告する
+  10. GMからレポートのアップロード完了の連絡が来たら、OncoStationで作成されたPDFレポートのリンクを[作成](#LNK)する
+  11. /data1/work/report/[eWES/WTS]/\<batch_folder\>/OST/ の下に作成されたPDFレポートを印刷する（Oncostationスタンプ,2in1,白黒両面印刷）
+  12. server_backup up コマンドでバックアップサーバーへのデータバックアップを実施する
+  13. aws_tool up コマンドでAWSへのデータバックアップを実施する
+  14. ワークシートの工程欄にすべてチェックが入っていることを確認し、終了日時を記載する
+  15. ワークシート,qc_info,TRF,PDFレポートをまとめて検査結果報告台帳にファイリングする
+  16. [工程外の手順] send_to_itms コマンドでiTMSに送付するデータを /media/usb/cap にコピーし、IT管理者に報告する
+</details>
 
 <a id="CR"></a>
 ## 1\. ワークシートの作成

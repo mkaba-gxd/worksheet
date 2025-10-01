@@ -185,11 +185,19 @@ def run_reset(args):
     pdf = os.path.join(anal_dir, anal_type, subDir, sample, 'Summary', sample+'.report.pdf')
     json = os.path.join(anal_dir, anal_type, subDir, sample, 'Summary', sample+'.report.json')
 
-    if save_flag is not None :
-        print("Comfirmed sample. Status cannot be changed.")
+    if save_flag == 'Y' :
+        print("Uploaded sample. Status and results cannot be changed.")
+        rename = prompt_choice("Rename report files? (yes[Y]/no[N]):", ['yes', 'y', 'no', 'n'])
+        choice = 'no'
+        status = None
+    elif save_flag is not None :
+        print("Cancel comfirmed sample. Review the execution.")
         rename = prompt_choice("Rename report files? (yes[Y]/no[N]):", ['yes', 'y', 'no', 'n'])
         choice = prompt_choice("Continue to reset database? (yes[Y]/no[N]):", ['yes', 'y', 'no', 'n'])
-        status = None
+        if status is not None :
+            restatus = prompt_choice("Continue changing the status? (yes[Y]/no[N]):", ['yes', 'y', 'no', 'n'])
+            if restatus in ['no','n'] :
+                status = None
     else :
         rename = 'yes'
         choice = 'yes'

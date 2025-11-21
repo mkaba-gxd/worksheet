@@ -10,8 +10,8 @@ from .commom import *
 def run_create(args):
 
     flowcellid = args.flowcellid
-    directory = args.directory
     project_type = args.project_type
+    novadir = args.novadir
     outdir = args.outdir
 
     df_info = getinfo(flowcellid)
@@ -25,10 +25,11 @@ def run_create(args):
         df_info = df_info[ df_info['PRJ_TYPE']==project_type]
     if df_info.shape[0] == 0 : init("No data for the relevant project type.")
 
-    uniq_info = fcDir_table(df_info, directory)
-    if uniq_info.shape[0] == 0: init("No analysed samples.")
+    batch_folder = SearchDir(df_info['sub_name'][0], Path(novadir))
+    if batch_folder is None : init("No analysed samples.")
 
-    df_info = pd.merge(df_info, uniq_info, on=['sub_name','PRJ_TYPE'])
+    df_info['seqDir'] = batch_folder
+    uniq_info = df_info[['sub_name','PRJ_TYPE','seqDir']].drop_duplicates()
 
     for i, item in uniq_info.iterrows() :
         if item['PRJ_TYPE'] == 'eWES':

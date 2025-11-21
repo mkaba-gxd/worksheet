@@ -20,8 +20,8 @@ def main():
     # create worksheet
     parser_cr = subparsers.add_parser("create", aliases=['CR'], help="create worksheet", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser_cr.add_argument("--flowcellid","-fc", required=True, help="flowcell id")
-    parser_cr.add_argument("--directory","-d", required=False, help="parent analytical directory", default="/data1/data/result")
     parser_cr.add_argument("--project_type","-t", required=False, help="project type", default="both", choices=["both","WTS","eWES"])
+    parser_cr.add_argument("--novadir","-n", required=False, help="novaseq directory", default="/data1/gxduser/novaseqx")
     parser_cr.add_argument("--outdir","-o", required=False, help="output directory path", default="/data1/work/workSheet")
     parser_cr.set_defaults(func=run_create)
 

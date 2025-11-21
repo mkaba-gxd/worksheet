@@ -59,8 +59,8 @@ optional arguments:
   8. ワークシートとqc_infoシートを印刷してTRFとともにファイルにまとめ、GMに渡す
   9. レビュー終了後、GMからレポート修正の指示があった場合は以下の手順でレポート修正を行う\
      9-1. 解析結果の[編集](#RM) ※ 解析完了時から当該作業時までにPipelineに変更があった場合は rerun.sh を作成する\
-     9-2. 解析結果の[削除](#RE) ※ croneでrerunする場合はstatusを100、rerun.shを手動実行する場合は statusを101に指定する\
-     9-3. croneで解析が再実行されるのを待つ、もしくは rerun.sh を手動で実行する\
+     9-2. 解析結果の[削除](#RE) ※ cronでrerunする場合はstatusを100、rerun.shを手動実行する場合は statusを101に指定する\
+     9-3. cronで解析が再実行されるのを待つ、もしくは rerun.sh を手動で実行する\
      9-4. レポート修正の完了をGMに報告する
   10. GMからレポートのアップロード完了の連絡が来たら、OncoStationで作成されたPDFレポートのリンクを[作成](#LNK)する\
        → /data1/work/report/[eWES/WTS]/\<batch_folder\>/OST/ の下にリンクが作成される

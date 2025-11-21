@@ -171,8 +171,8 @@ optional arguments:
 ## 3\. シートの追加
 作成済のワークシートに以下の情報を項目別にまとめたシートを追加する。
 - QC情報（OncoStationに掲載される項目。WETのQCも含む）
-- レポートに記載される解析結果（Summaryフォルダに格納された summarized.\*.tsv から収集）\
-  
+- レポートに記載されている解析結果（Summaryフォルダに格納された summarized.\*.tsv から収集）\
+
 createコマンドでワークシートを作成してから実行すること。
 ```
 worksheet addition --flowcellid <flowcellid>

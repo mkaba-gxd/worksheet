@@ -107,11 +107,12 @@ def run_check(args):
 
         df_prj = df_info[df_info['PRJ_TYPE']==pj_type].reset_index(drop=True)
         batch = df_prj['sub_name'][0]
-        anal_dir = os.path.join(directory, pj_type, SearchDir(batch, Path(directory + '/' + pj_type)))
+        anal_dir = SearchDir(batch, Path(directory + '/' + pj_type))
         if anal_dir is None:
             print('Analysis folder not created.')
             continue
 
+        anal_dir = os.path.join(directory, pj_type, anal_dir)
         ss_file = os.path.join(novadir, os.path.basename(anal_dir), 'SampleSheet.csv')
 
         if not os.path.isfile(ss_file) :

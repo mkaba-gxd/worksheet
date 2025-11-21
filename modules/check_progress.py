@@ -54,12 +54,13 @@ def subtotal_status (df):
         elif idx == '104' :
             print ('reanalysis: ' + str(df.groupby('ANAL_STATUS').get_group('104').shape[0]) + 'samples')
 
-def check_files(df, analDir:Path, type):
+def check_files(df, analDir:Path, type, msg):
     FILES = glob.glob(str(analDir) + '/*/Summary/*.report.' + type)
     SAMPLES = [ p.split("/")[-1].split('.')[0] for p in FILES ]
     COMP = list(set(df['SAMPLE_ID']) - set(SAMPLES))
     if len(COMP) > 0:
-        print(type.upper() + ' not yet created:' + ','.join(COMP))
+        if msg :
+            print(type.upper() + ' not yet created:' + ','.join(COMP))
         return False
     else:
         print (type.upper() + ' all created')
@@ -131,8 +132,8 @@ def run_check(args):
 
         df_prj = df_prj[df_prj['ANAL_STATUS']=='102']
         if df_prj.shape[0] == 0 : continue
-        flag = check_files(df_prj, anal_dir, 'json')
-        flag = check_files(df_prj, anal_dir, 'pdf')
+        flag = check_files(df_prj, anal_dir, 'json', True)
+        flag = check_files(df_prj, anal_dir, 'pdf', False)
 
         if flag :
             linkDir_add = linkDir + '/' + pj_type + '/' + os.path.basename(anal_dir) + '/PL'

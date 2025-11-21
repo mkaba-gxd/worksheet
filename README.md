@@ -121,7 +121,8 @@ usage: worksheet.py create [-h] --flowcellid FLOWCELLID [--directory DIRECTORY]
 ## 2\. 解析の進捗確認
 - データベースに登録されている検体情報とNGSデータフォルダに格納されているSampleSheet.csvの内容が合致しているかを確認する
 - データベースのANAL_STATUSの値を基に解析の進捗を報告する（100:registered, 101:in progress, 102:finished, 104:reanalysis）
-- report.json, report.pdfを作成済の検体数と、未作成の検体のSample IDを表示する
+- report.json が作成されている検体数と、未作成の検体のSample IDを表示する
+- report.pdf が作成されている検体数を表示する
 - 作成済のreport.pdfのシンボリックリンクを作成する
 ```
 worksheet check --flowcellid <flowcellid>

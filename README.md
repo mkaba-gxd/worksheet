@@ -52,24 +52,28 @@ optional arguments:
       → /data1/work/report/[eWES/WTS]/\<batch_folder\>/PL/ の下にPipelineで作成されたPDFレポートのリンクが作成される
   3. ワークシートにqc_infoと解析結果のシートを[追加](#ADD)する
   4. ネガコンで変異が検出されなかったことを確認する
-  5. ポジコンでワークシートに記載されている変異が検出されていることを確認する
-  6. **[工程外手順]** monitoring PRE コマンドでフィルター前データの一覧を作成する\
+  5. ポジコンでワークシートに記載されている変異が検出されていることを確認する\
+      該当する変異がレポートに記載されていない場合はGMに報告のうえ、以下の途中ファイルを確認して、記載されていればその旨を作業書に記載する\
+     【eWES】/data1/data/result/eWES/\<batch_folder\>/\<ポジコンのSampleID\>/SNV/somatic/\<ポジコンのSampleID\>.target.snv.marked.tsv \
+     【WTS】 /data1/data/result/WTS/\<batch_folder\>/\<ポジコンのSampleID\>/Fusion/Metafusion/final.n2.cluster.CANCER_FUSIONS \
+     上記ファイルにも記載がない場合はGMに指示を仰ぐ
+  7. **[工程外手順]** monitoring PRE コマンドでフィルター前データの一覧を作成する\
       → /data1/work/monitoring/preFilter/\<batch_folder\> の下に [eWES/WTTS].*.xlsx が作成される
-  7. **[工程外手順]** レビュー資料作成手順.pptx に従ってフィルター前データの一覧に情報を追記し、GMに送付する
-  8. ワークシートとqc_infoシートを印刷してTRFとともにファイルにまとめ、GMに渡す
-  9. レビュー終了後、GMからレポート修正の指示があった場合は以下の手順でレポート修正を行う\
+  8. **[工程外手順]** レビュー資料作成手順.pptx に従ってフィルター前データの一覧に情報を追記し、GMに送付する
+  9. ワークシートとqc_infoシートを印刷してTRFとともにファイルにまとめ、GMに渡す
+  10. レビュー終了後、GMからレポート修正の指示があった場合は以下の手順でレポート修正を行う\
      9-1. 解析結果の[編集](#RM) ※ 解析完了時から当該作業時までにPipelineに変更があった場合は rerun.sh を作成する\
      9-2. 解析結果の[削除](#RE) ※ cronでrerunする場合はstatusを100、rerun.shを手動実行する場合は statusを101に指定する\
      9-3. cronで解析が再実行されるのを待つ、もしくは rerun.sh を手動で実行する\
      9-4. レポート修正の完了をGMに報告する
-  10. GMからレポートのアップロード完了の連絡が来たら、OncoStationで作成されたPDFレポートのリンクを[作成](#LNK)する\
+  11. GMからレポートのアップロード完了の連絡が来たら、OncoStationで作成されたPDFレポートのリンクを[作成](#LNK)する\
        → /data1/work/report/[eWES/WTS]/\<batch_folder\>/OST/ の下にリンクが作成される
-  11. PDFレポートを印刷する（Oncostationスタンプ,2in1,白黒両面印刷）
-  12. server_backup up コマンドでバックアップサーバーへのデータバックアップを実施する
-  13. aws_tool up コマンドでAWSへのデータバックアップを実施する
-  14. ワークシートの工程欄にすべてチェックが入っていることを確認し、終了日時を記載する
-  15. ワークシート,qc_info,TRF,PDFレポートをまとめて検査結果報告台帳にファイリングする
-  16. **[工程外手順]** send_to_itms コマンドでiTMSに送付するデータを /media/usb/cap にコピーし、IT管理者に報告する
+  12. PDFレポートを印刷する（Oncostationスタンプ,2in1,白黒両面印刷）
+  13. server_backup up コマンドでバックアップサーバーへのデータバックアップを実施する
+  14. aws_tool up コマンドでAWSへのデータバックアップを実施する
+  15. ワークシートの工程欄にすべてチェックが入っていることを確認し、終了日時を記載する
+  16. ワークシート,qc_info,TRF,PDFレポートをまとめて検査結果報告台帳にファイリングする
+  17. **[工程外手順]** send_to_itms コマンドでiTMSに送付するデータを /media/usb/cap にコピーし、IT管理者に報告する
     
 </details>
 

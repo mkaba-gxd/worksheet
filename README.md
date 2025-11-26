@@ -57,34 +57,34 @@ optional arguments:
      【eWES】/data1/data/result/eWES/\<batch_folder\>/\<ポジコンのSampleID\>/SNV/somatic/\<ポジコンのSampleID\>.target.snv.marked.tsv \
      【WTS】 /data1/data/result/WTS/\<batch_folder\>/\<ポジコンのSampleID\>/Fusion/Metafusion/final.n2.cluster.CANCER_FUSIONS \
      上記ファイルにも記載がない場合はGMに指示を仰ぐ
-  7. **[工程外手順]** monitoring PRE コマンドでフィルター前データの一覧を作成する\
+  6. **[工程外手順]** monitoring PRE コマンドでフィルター前データの一覧を作成する\
       → /data1/work/monitoring/preFilter/\<batch_folder\> の下に [eWES/WTTS].*.xlsx が作成される
-  8. **[工程外手順]** レビュー資料作成手順.pptx に従ってフィルター前データの一覧に情報を追記し、GMに送付する
-  9. **[工程外手順]** monitoring AGG コマンドでBox用集計データを作成し、GMに送付する
-  10. **[工程外手順]** monitoring ITM コマンドでSNV＆InDelの中間データ一覧を作成する \
+  7. **[工程外手順]** レビュー資料作成手順.pptx に従ってフィルター前データの一覧に情報を追記し、GMに送付する
+  8. **[工程外手順]** monitoring AGG コマンドでBox用集計データを作成し、GMに送付する
+  9. **[工程外手順]** monitoring ITM コマンドでSNV＆InDelの中間データ一覧を作成する \
       → /data1/work/monitoring/intermediate/[timestamp].3tools.xlsx が作成されるので、共有サーバーの以下の場所に格納する\
        \\\192.168.11.19\cap\教育資料\DRY\202507_IGV\ 
-  11. ワークシートとqc_infoシートを印刷してTRFとともにファイルにまとめ、GMに渡す
-  12. レビュー終了後、GMからレポート修正の指示があった場合は以下の手順でレポート修正を行う\
+  10. ワークシートとqc_infoシートを印刷してTRFとともにファイルにまとめ、GMに渡す
+  11. レビュー終了後、GMからレポート修正の指示があった場合は以下の手順でレポート修正を行う\
      11-1. 解析結果の[編集](#RM) ※ 解析完了時から当該作業時までにPipelineに変更があった場合は rerun.sh を作成する\
      11-2. 解析結果の[削除](#RE) ※ cronでrerunする場合はstatusを100、rerun.shを手動実行する場合は statusを101に指定する\
      11-3. cronで解析が再実行されるのを待つ、もしくは rerun.sh を手動で実行する\
      11-4. レポート修正の完了をGMに報告する
-  13. GMからレポートのアップロード完了の連絡が来たら、OncoStationで作成されたPDFレポートのリンクを[作成](#LNK)する\
+  12. GMからレポートのアップロード完了の連絡が来たら、OncoStationで作成されたPDFレポートのリンクを[作成](#LNK)する\
        → /data1/work/report/[eWES/WTS]/\<batch_folder\>/OST/ の下にリンクが作成される
-  14. PDFレポートを印刷する（Oncostationスタンプ,2in1,白黒両面印刷）
-  15. server_backup up コマンドでバックアップサーバーへのデータバックアップを実施する
-  16. aws_tool up コマンドでAWSへのデータバックアップを実施する
-  17. ワークシートの工程欄にすべてチェックが入っていることを確認し、終了日時を記載する
-  18. ワークシート,qc_info,TRF,PDFレポートをまとめて検査結果報告台帳にファイリングする
-  19. **[工程外手順]** send_to_itms コマンドでiTMSに送付するデータを /media/usb/cap にコピーし、IT管理者に報告する
+  13. PDFレポートを印刷する（Oncostationスタンプ,2in1,白黒両面印刷）
+  14. server_backup up コマンドでバックアップサーバーへのデータバックアップを実施する
+  15. aws_tool up コマンドでAWSへのデータバックアップを実施する
+  16. ワークシートの工程欄にすべてチェックが入っていることを確認し、終了日時を記載する
+  17. ワークシート,qc_info,TRF,PDFレポートをまとめて検査結果報告台帳にファイリングする
+  18. **[工程外手順]** send_to_itms コマンドでiTMSに送付するデータを /media/usb/cap にコピーし、IT管理者に報告する
     
 </details>
 
 <a id="CR"></a>
 ## 1\. ワークシートの作成
 \<OUTDIR\>にワークシートを作成する。同名のファイルがある場合は上書きするかどうか選択する。\
-\<NOVADIR\>に解析フォルダが作成されてから(=シーケンスが開始されてから)実行すること。
+シーケンスが開始されてから(=\<NOVADIR\>に解析フォルダが作成されてから)実行すること。
 ```
 worksheet create --flowcellid <flowcellid>
 worksheet CR -fc <flowcellid>
@@ -99,7 +99,8 @@ worksheet CR -fc <flowcellid>
 ```
 $ worksheet create --help
 version: v3.1.0
-usage: worksheet.py create [-h] --flowcellid FLOWCELLID [--project_type {both,WTS,eWES}] [--novadir NOVADIR] [--outdir OUTDIR]
+usage: worksheet.py create [-h] --flowcellid FLOWCELLID [--project_type {both,WTS,eWES}]
+                           [--novadir NOVADIR] [--outdir OUTDIR]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -131,7 +132,7 @@ usage: worksheet.py create [-h] --flowcellid FLOWCELLID [--directory DIRECTORY]
 - データベースのANAL_STATUSの値を基に解析の進捗を報告する（100:registered, 101:in progress, 102:finished, 104:reanalysis）
 - report.json が作成されている検体数と、未作成の検体のSample IDを表示する
 - report.pdf が作成されている検体数を表示する
-- 作成済のreport.pdfのシンボリックリンクを作成する
+- Pipelineで作成されたreport.pdfのシンボリックリンクを作成する
 ```
 worksheet check --flowcellid <flowcellid>
 worksheet CH -fc <flowcellid>
@@ -145,8 +146,8 @@ worksheet CH -fc <flowcellid>
 ```
 $ worksheet check --help
 version: v3.1.0
-usage: worksheet.py check [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}] [--novadir NOVADIR]
-                          [--linkDir LINKDIR]
+usage: worksheet.py check [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}]
+                          [--novadir NOVADIR] [--linkDir LINKDIR]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -164,7 +165,7 @@ optional arguments:
 | option           |required | 概要           |default         |
 |:-----------------|:-------:|:---------------|:---------------|
 |--flowcellid/-fc  |True     |バッチ固有のID。OncoStationに掲載されている9桁の半角英数字 |None |
-|--directory/-d    |False    |解析フォルダの親ディレクトリへのパス |/data1/data/result      |
+|--directory/-d    |False    |解析フォルダの親ディレクトリへのパス  |/data1/data/result      |
 |--project_type/-t |False    |解析種別。both,eWES,WTSから選択する  |both                    |
 |--novadir/-n      |False    |NGSデータ転送先フォルダ              |/data1/gxduser/novaseqx |
 |--linkDir/-l      |False    |PDFレポートのリンク先ディレクトリへのパス |/data1/work/report |
@@ -175,9 +176,9 @@ optional arguments:
 ## 3\. シートの追加
 作成済のワークシートに以下の情報を項目別にまとめたシートを追加する。
 - QC情報（OncoStationに掲載される項目。WETのQCも含む）
-- レポートに記載されている解析結果（Summaryフォルダに格納された summarized.\*.tsv から収集）\
+- レポートに記載されている解析結果（Summaryフォルダに格納された summarized.\*.tsv から収集）
 
-createコマンドでワークシートを作成してから実行すること。
+ワークシート未作成の場合はエラー終了する。
 ```
 worksheet addition --flowcellid <flowcellid>
 worksheet ADD -fc <flowcellid>
@@ -191,8 +192,8 @@ worksheet ADD -fc <flowcellid>
 ```
 $ worksheet addition --help
 version: v3.1.0
-usage: worksheet.py addition [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}]
-                             [--outdir OUTDIR]
+usage: worksheet.py addition [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] 
+                             [--project_type {both,WTS,eWES}] [--outdir OUTDIR]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -323,7 +324,8 @@ worksheet LNK -fc <flowcellid>
 ```
 $ worksheet link --help
 version: v3.1.0
-usage: worksheet.py link [-h] --flowcellid FLOWCELLID [--directory DIRECTORY] [--project_type {both,WTS,eWES}] [--linkDir LINKDIR]
+usage: worksheet.py link [-h] --flowcellid FLOWCELLID [--directory DIRECTORY]
+                         [--project_type {both,WTS,eWES}] [--linkDir LINKDIR]
 
 optional arguments:
   -h, --help            show this help message and exit

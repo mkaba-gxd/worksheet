@@ -73,7 +73,7 @@ optional arguments:
   12. GMからレポートのアップロード完了の連絡が来たら、OncoStationで作成されたPDFレポートのリンクを[作成](#LNK)する\
        → /data1/work/report/[eWES/WTS]/\<batch_folder\>/OST/ の下にリンクが作成される
   13. PDFレポートを印刷する（Oncostationスタンプ,2in1,白黒両面印刷）
-  14. [server_backup up](https://github.com/mkaba-gxd/server_backup#1-データのバックアップ) コマンドでバックアップサーバーへのデータバックアップを実施する
+  14. [server_backup up](https://github.com/mkaba-gxd/server_backup#1-データのバックアップアップロード) コマンドでバックアップサーバーへのデータバックアップを実施する
   15. [aws_tool up](https://github.com/mkaba-gxd/aws?tab=readme-ov-file#1-アップロード) コマンドでAWSへのデータバックアップを実施する
   16. ワークシートの工程欄にすべてチェックが入っていることを確認し、終了日時を記載する
   17. ワークシート,qc_info,TRF,PDFレポートをまとめて検査結果報告台帳にファイリングする

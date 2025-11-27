@@ -60,8 +60,8 @@ optional arguments:
   6. **[工程外手順]** [monitoring PRE](https://github.com/mkaba-gxd/monitoring?tab=readme-ov-file#7-prefilter) コマンドでフィルター前データの一覧を作成する\
       → /data1/work/monitoring/preFilter/\<batch_folder\> の下に [eWES/WTTS].*.xlsx が作成される
   7. **[工程外手順]** レビュー資料作成手順.pptx に従ってフィルター前データの一覧に情報を追記し、GMに送付する
-  8. **[工程外手順]** monitoring AGG コマンドでBox用集計データを作成し、GMに送付する
-  9. **[工程外手順]** monitoring ITM コマンドでSNV＆InDelの中間データ一覧を作成する \
+  8. **[工程外手順]** [monitoring AGG](https://github.com/mkaba-gxd/monitoring?tab=readme-ov-file#10aggregate) コマンドでBox用集計データを作成し、GMに送付する
+  9. **[工程外手順]** [monitoring ITM](https://github.com/mkaba-gxd/monitoring?tab=readme-ov-file#9intermediate) コマンドでSNV＆InDelの中間データ一覧を作成する \
       → /data1/work/monitoring/intermediate/[timestamp].3tools.xlsx が作成されるので、共有サーバーの以下の場所に格納する\
        \\\192.168.11.19\cap\教育資料\DRY\202507_IGV\ 
   10. ワークシートとqc_infoシートを印刷してTRFとともにファイルにまとめ、GMに渡す
@@ -223,7 +223,7 @@ optional arguments:
 ## 4\. 解析結果の編集（削除）
 指定された sample ID について、解析フォルダに格納されているsummaryファイルの不要な行を削除する。\
 **この機能だけではデータベースの登録内容は変更されません（＝OSTレポートも変更されません）。** [5.データベースのリセット](#RE) で当該検体の変異情報をデータベースから削除し、手作業またはcronの自動実行を利用して report_json 工程を行い、データベースへ変異を登録すること。\
-解析フォルダ内データの書き換えを行うので **gxd_pipeline ユーザーで実行すること。** \
+解析フォルダ内データの書き換えを行うので **gxd_pipeline ユーザーで実行すること。** 
 ```
 worksheet remove --sample <sample ID>
 worksheet RM -s <sample ID>

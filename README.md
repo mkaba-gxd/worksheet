@@ -57,7 +57,7 @@ optional arguments:
      【eWES】/data1/data/result/eWES/\<batch_folder\>/\<ポジコンのSampleID\>/SNV/somatic/\<ポジコンのSampleID\>.target.snv.marked.tsv \
      【WTS】 /data1/data/result/WTS/\<batch_folder\>/\<ポジコンのSampleID\>/Fusion/Metafusion/final.n2.cluster.CANCER_FUSIONS \
      上記ファイルにも記載がない場合はGMに指示を仰ぐ
-  6. **[工程外手順]** monitoring PRE コマンドでフィルター前データの一覧を作成する\
+  6. **[工程外手順]** [monitoring PRE](https://github.com/mkaba-gxd/monitoring?tab=readme-ov-file#7-prefilter) コマンドでフィルター前データの一覧を作成する\
       → /data1/work/monitoring/preFilter/\<batch_folder\> の下に [eWES/WTTS].*.xlsx が作成される
   7. **[工程外手順]** レビュー資料作成手順.pptx に従ってフィルター前データの一覧に情報を追記し、GMに送付する
   8. **[工程外手順]** monitoring AGG コマンドでBox用集計データを作成し、GMに送付する
@@ -264,7 +264,7 @@ optional arguments:
 
 対話型プログラムなので、表示される内容に応じて編集する内容を入力する。\
 可能な編集は行削除（変異の削除）のみなので、解析結果内容の一部を修正する場合はsummaryファイルを**手作業で**編集してレポートの再作成を実施する。
-[手順はこちら](https://github.com/mkaba-gxd/special-case/blob/main/README.md#case4-解析結果の修正とレポートの再作成手作業)
+[手順はこちら](https://github.com/mkaba-gxd/special-case/blob/main/README.md#case6-解析結果の修正とレポートの再作成手作業)
 
 </details>
 

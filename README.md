@@ -46,11 +46,11 @@ optional arguments:
     More Details
   </summary>
   
-  1. ワークシートの[作成](#CR)\
+  1. [ワークシートの作成](#CR)\
       → /data1/work/workSheet に \<batch_folder\>.[eWES/WTS].xlsx が作成される
   2. 解析の[進捗を確認](#CH)\
       → /data1/work/report/[eWES/WTS]/\<batch_folder\>/PL/ の下にPipelineで作成されたPDFレポートのリンクが作成される
-  3. ワークシートにqc_infoと解析結果のシートを[追加](#ADD)する
+  3. ワークシートにqc_infoと解析結果の[シートを追加](#ADD)する
   4. ネガコンで変異が検出されなかったことを確認する
   5. ポジコンでワークシートに記載されている変異が検出されていることを確認する\
       該当する変異がレポートに記載されていない場合はGMに報告のうえ、以下の途中ファイルを確認して、記載されていればその旨を作業書に記載する\
@@ -66,19 +66,23 @@ optional arguments:
        \\\192.168.11.19\cap\教育資料\DRY\202507_IGV\ 
   10. ワークシートとqc_infoシートを印刷してTRFとともにファイルにまとめ、GMに渡す
   11. レビュー終了後、GMからレポート修正の指示があった場合は以下の手順でレポート修正を行う\
-     11-1. 解析結果の[編集](#RM) ※ 解析完了時から当該作業時までにPipelineに変更があった場合は rerun.sh を作成する\
-     11-2. 解析結果の[削除](#RE) ※ cronでrerunする場合はstatusを100、rerun.shを手動実行する場合は statusを101に指定する\
+     11-1. [解析結果の編集](#RM) ※ 解析完了時から当該作業時までにPipelineに変更があった場合は rerun.sh を作成する\
+     11-2. [解析結果の削除](#RE) ※ cronでrerunする場合はstatusを100、rerun.shを手動実行する場合は statusを101に指定する\
      11-3. cronで解析が再実行されるのを待つ、もしくは rerun.sh を手動で実行する\
      11-4. レポート修正の完了をGMに報告する
-  12. GMからレポートのアップロード完了の連絡が来たら、OncoStationで作成されたPDFレポートのリンクを[作成](#LNK)する\
+  12. GMからレポートのアップロード完了の連絡が来たら、OncoStationで作成されたPDFレポートの[リンクを作成](#LNK)する\
        → /data1/work/report/[eWES/WTS]/\<batch_folder\>/OST/ の下にリンクが作成される
-  13. PDFレポートを印刷する（Oncostationスタンプ,2in1,白黒両面印刷）
+  13. OncoStationで作成されたPDFレポートを印刷する（Oncostationスタンプ,2in1,白黒両面印刷）
   14. [server_backup up](https://github.com/mkaba-gxd/server_backup#1-データのバックアップアップロード) コマンドでバックアップサーバーへのデータバックアップを実施する
   15. [aws_tool up](https://github.com/mkaba-gxd/aws?tab=readme-ov-file#1-アップロード) コマンドでAWSへのデータバックアップを実施する
   16. ワークシートの工程欄にすべてチェックが入っていることを確認し、終了日時を記載する
   17. ワークシート,qc_info,TRF,PDFレポートをまとめて検査結果報告台帳にファイリングする
-  18. **[工程外手順]** [send_to_itms](https://github.com/mkaba-gxd/send_to_itms) コマンドでiTMSに送付するデータを /media/usb/cap にコピーし、IT管理者に報告する
-    
+  18. **[工程外手順]** NGSから転送された生データをバックアップサーバー(/data2/backup/rawdata/)へ手動でrsync転送する ※所有者がrootのためsudoで実行
+  19. **[工程外手順]** /data1/data/NovaseqX/ に出力されている mergeされたfastq.gzをバックアップサーバー(/data2/backup/NovaseqX/)へ手動でrsync転送する
+  20. **[工程外手順]** [send_to_itms](https://github.com/mkaba-gxd/send_to_itms) コマンドでiTMSに送付するデータを /media/usb/cap にコピーし、IT管理者に報告する
+
+工程15については当該バッチの全検体が解析完了した時点、工程18についてはNGSデータが転送完了した時点、工程19に関しては当該バッチの全検体の解析がスタートした時点で実行してもよい。
+
 </details>
 
 <a id="CR"></a>

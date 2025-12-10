@@ -132,6 +132,17 @@ usage: worksheet.py create [-h] --flowcellid FLOWCELLID [--directory DIRECTORY]
 
 </details>
 
+<details>
+  <summary> 
+    手作業で行う場合
+  </summary>
+
+共有サーバー（\\192.168.11.19\cap\教育資料\DRY\Pipeline\templete）に作業書のひな形が格納されているので、CAP Storageにコピーし加工する。\
+sample_info シートについては、BDeaver などでデータベースに接続し、テーブル gxd.gc_project, gxd.gc_history_log, gxd.tb_expr_seq_header, gxd.gc_qc_sample から flowcell ID に紐づいている検体情報を抽出して作成する。\
+すべての項目について抽出することが難しい場合は SAMPLE_ID,PATIENT_NO,CTRL の情報だけ記載する。
+
+</details>
+
 <a id="CH"></a>
 ## 2\. 解析の進捗確認
 - データベースに登録されている検体情報とNGSデータフォルダに格納されているSampleSheet.csvの内容が合致しているかを確認する
@@ -175,6 +186,15 @@ optional arguments:
 |--project_type/-t |False    |解析種別。both,eWES,WTSから選択する  |both                    |
 |--novadir/-n      |False    |NGSデータ転送先フォルダ              |/data1/gxduser/novaseqx |
 |--linkDir/-l      |False    |PDFレポートのリンク先ディレクトリへのパス |/data1/work/report |
+</details>
+
+<details>
+  <summary> 
+    手作業で行う場合
+  </summary>
+共有サーバー（\\192.168.11.19\cap\教育資料\DRY\Pipeline\templete）に作業書のひな形が格納されているので、CAP Storageにコピーし加工する。
+sample_info シートは BDeaver などでデータベースに接続し、テーブル gxd.gc_project, gxd.gc_history_log, gxd.tb_expr_seq_header, gxd.gc_qc_sample から flowcell ID に紐づいている検体情報を抽出する。\
+すべての項目について抽出することが難しい場合は SAMPLE_ID,PATIENT_NO,CTRL の情報だけ記載する。
 
 </details>
 

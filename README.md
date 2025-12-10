@@ -322,6 +322,20 @@ optional arguments:
 対話型プログラムなので、表示される内容に応じて編集する内容を入力する。\
 可能な編集は行削除（変異の削除）のみなので、解析結果内容の一部を修正する場合はsummaryファイルを**手作業で**編集してレポートの再作成を実施する。
 [手順はこちら](https://github.com/mkaba-gxd/special-case/blob/main/README.md#case6-解析結果の修正とレポートの再作成手作業)
+</details>
+
+<details>
+  <summary> 
+    手作業で行う場合
+  </summary>
+
+修正対象項目によって以下のファイルを修正する。  
+|解析種別  |修正項目                   |修正対象ファイル      |修正方法             |
+|:--------|:--------------------------|:-------------------|:-------------------|
+|eWES     |SNV & InDel                |/data1/data/result/eWES/[batch]/[sampleID]/Summary/[sampleID].summarized.snv.target.tsv |該当行削除 |
+|eWES     |Copy Number Variants       |/data1/data/result/eWES/[batch]/[sampleID]/Summary/[sampleID].summarized.cnv.exome.tsv  |該当行削除 |
+|WTS      |Fusion                     |/data1/data/result/WTS/[batch]/[sampleID]/Summary/[sampleID].summarized.fusion.tsv      |該当行削除 |
+|WTS      |Alternative Splicing       |/data1/data/result/WTS/[batch]/[sampleID]/Summary/[sampleID].summarized.splice.tsv      |該当行の2カラム目以降の値を空白に変更 |
 
 </details>
 
@@ -362,6 +376,19 @@ optional arguments:
 指定された SampleID が Comfirm 実行済だった場合、**statusは変更しない**。その他の変更を行うかどうか聞かれるので選択する。\
 --status オプションで解析ステータスを変更する。 100:解析前, 101:解析中, 102:解析完了 \
 **100を指定した場合はcronによる再解析が行われる。** なお、指定しない場合は解析ステータスを変更しない。
+</details>
+
+<details>
+  <summary> 
+    手作業で行う場合
+  </summary>
+以下のファイルについて、ファイル名を変更する。\
+/data1/data/result/[eWES/WTS]/[batch]/[sampleID]/Summary/[sampleID].report.json ⇒ [sampleID].report.[timestamp].json \
+/data1/data/result/[eWES/WTS]/[batch]/[sampleID]/Summary/[sampleID].report.pdf ⇒ [sampleID].report.[timestamp].pdf \
+
+BDeaver などでデータベースに接続し、修正対象の検体について、テーブル gxd.gc_history_log の ANAL_STATUS の値を102から 100 または 101 に変更する。\
+※ANAL_STATUSを100にした場合は10分以内にcronによる解析再実行が行われる。101にした場合は手作業で report_json 工程を実行する。
+gxd.gc_project, gxd.gc_history_log, gxd.tb_expr_seq_header, gxd.gc_qc_sample から flowcell ID に紐づいている検体情報を抽出してqc_infoシートを作成する。\
 
 </details>
 

@@ -329,7 +329,7 @@ optional arguments:
     手作業で行う場合
   </summary>
 
-修正対象項目によって以下のファイルを修正する。  
+修正内容によって以下のファイルを編集する。（オリジナルファイルは名前を変更して残しておく）
 |解析種別  |修正項目                   |修正対象ファイル      |修正方法             |
 |:--------|:--------------------------|:-------------------|:-------------------|
 |eWES     |SNV & InDel                |/data1/data/result/eWES/[batch]/[sampleID]/Summary/[sampleID].summarized.snv.target.tsv |該当行削除 |
@@ -382,14 +382,20 @@ optional arguments:
   <summary> 
     手作業で行う場合
   </summary>
-以下のファイルについて、ファイル名を変更する。\
+
+- 以下のファイルについて、ファイル名を変更する。\
 /data1/data/result/[eWES/WTS]/[batch]/[sampleID]/Summary/[sampleID].report.json ⇒ [sampleID].report.[timestamp].json \
-/data1/data/result/[eWES/WTS]/[batch]/[sampleID]/Summary/[sampleID].report.pdf ⇒ [sampleID].report.[timestamp].pdf \
-
-BDeaver などでデータベースに接続し、修正対象の検体について、テーブル gxd.gc_history_log の ANAL_STATUS の値を102から 100 または 101 に変更する。\
+/data1/data/result/[eWES/WTS]/[batch]/[sampleID]/Summary/[sampleID].report.pdf ⇒ [sampleID].report.[timestamp].pdf 
+- BDeaver などでデータベースに接続し、当該検体の変異情報をすべて削除する。※修正した変異以外も削除すること
+  
+|解析種別 |修正対象テーブル    |
+|:--------|:-------------------|
+|eWES     |gc_alter_snv, gc_snv_indeterminate, gc_alter_cnv, gc_alter_msi, del_alt_tmb |
+|WTS      |gc_alter_splice, gc_alter_sv, gc_alter_express |
+- BDeaver などでデータベースに接続し、テーブル gc_qc_bi に登録済の当該検体のQC情報をすべて削除する
+- BDeaver などでデータベースに接続し、修正対象の検体について、テーブル gxd.gc_history_log, gc_qc_sample の ANAL_STATUS の値を102から 100 または 101 に変更する。\
 ※ANAL_STATUSを100にした場合は10分以内にcronによる解析再実行が行われる。101にした場合は手作業で report_json 工程を実行する。
-gxd.gc_project, gxd.gc_history_log, gxd.tb_expr_seq_header, gxd.gc_qc_sample から flowcell ID に紐づいている検体情報を抽出してqc_infoシートを作成する。\
-
+※データベースの書き換えについては、**間違った場合のリカバリーが難しい**ため、ダブルチェックを実施する等、細心の注意を払うこと。
 </details>
 
 <a id="LNK"></a>
@@ -434,9 +440,10 @@ optional arguments:
   <summary> 
     手作業で行う場合
   </summary>
-/data1/work/report/[eWES/WTS]/[batch]/OST を作成する。\
-BDeaver などでデータベースに接続し、テーブル gxd.gc_project, gxd.gc_history_log, gxd.tb_expr_seq_header, gxd.gc_qc_sample から flowcell ID に紐づいている検体情報を抽出して各検体の REPORT_URL を取得する。\
-/data1/OST/reports/[sample ID]/ の直下にある REPORT_URL と同じファイル名のpdfのシンボリックリンクを /data1/work/report/[eWES/WTS]/[batch]/OST/ に作成する。
+
+① /data1/work/report/[eWES/WTS]/[batch]/OST を作成する。\
+② BDeaver などでデータベースに接続し、テーブル gxd.gc_project, gxd.gc_history_log, gxd.tb_expr_seq_header, gxd.gc_qc_sample から flowcell ID に紐づいている検体情報を抽出して各検体の REPORT_URL を取得する。\
+③ /data1/OST/reports/[sample ID]/ の直下にある REPORT_URL と同じファイル名のpdfのシンボリックリンクを①で作成したディレクトリに作成する。
 </details>
 
 

@@ -137,10 +137,9 @@ usage: worksheet.py create [-h] --flowcellid FLOWCELLID [--directory DIRECTORY]
     手作業で行う場合
   </summary>
 
-共有サーバー（\\192.168.11.19\cap\教育資料\DRY\Pipeline\templete）に作業書のひな形が格納されているので、CAP Storageにコピーし加工する。\
-sample_info シートについては、BDeaver などでデータベースに接続し、テーブル gxd.gc_project, gxd.gc_history_log, gxd.tb_expr_seq_header, gxd.gc_qc_sample から flowcell ID に紐づいている検体情報を抽出して作成する。\
+templete フォルダに作業書のひな形が格納されているので、/data1/work/workSheet/ にコピーして加工する。\
+sample_info シートについては、BDeaver などでデータベースに接続し、テーブル gxd.tb_expr_seq_header, gxd.gc_qc_sample, gxd.gc_project, gxd.gc_history_log から flowcell ID に紐づいている検体情報を抽出して作成する。\
 すべての項目について抽出することが難しい場合は SAMPLE_ID,PATIENT_NO,CTRL の情報だけ記載する。
-
 </details>
 
 <a id="CH"></a>
@@ -192,9 +191,27 @@ optional arguments:
   <summary> 
     手作業で行う場合
   </summary>
-共有サーバー（\\192.168.11.19\cap\教育資料\DRY\Pipeline\templete）に作業書のひな形が格納されているので、CAP Storageにコピーし加工する。
-sample_info シートは BDeaver などでデータベースに接続し、テーブル gxd.gc_project, gxd.gc_history_log, gxd.tb_expr_seq_header, gxd.gc_qc_sample から flowcell ID に紐づいている検体情報を抽出する。\
-すべての項目について抽出することが難しい場合は SAMPLE_ID,PATIENT_NO,CTRL の情報だけ記載する。
+
+### SampleSheetとDB登録内容が一致しているかを確認する
+① サンプルシート（通常は /data1/gxduser/novaseqx/[batch]/SampleSheet.csv に格納）の [BCLConvert_Data] 項目の情報を抽出する。\
+② BDeaver などでデータベースに接続し、テーブル gxd.gc_project, gxd.gc_history_log, gxd.tb_expr_seq_header, gxd.gc_qc_sample から flowcell ID に紐づいている Sample_ID, Index, Index2 を抽出する。\
+①と②のSample_ID, Index, Index2 が過不足なく一致することを確認する。
+
+### 全サンプルの解析が終了し、report.jsonとreport.pdf が作成されていることを確認する
+BDeaver などでデータベースに接続し、テーブル gxd.gc_project, gxd.gc_history_log, gxd.tb_expr_seq_header, gxd.gc_qc_sample から flowcell ID に紐づいている検体の ANAL_STATUS がすべて102であることを確認する。\
+以下のコマンドで作成済の *.report.json と *.report.pdf 一覧を確認する。
+```
+ll /data1/data/result/[eWES/WTS]/[batch]/*/Summary/*.report.json
+ll /data1/data/result/[eWES/WTS]/[batch]/*/Summary/*.report.pdf
+```
+
+### Pipelineで作成されたpdfレポートのシンボリックリンクを作成する
+```
+mkdir -p /data1/work/report/[eWES/WTS]/[batch]/PL 
+for file in `ls /data1/data/result/[eWES/WTS]/[batch]/*/Summary/*.report.pdf`; do
+ln -s $file /data1/work/report/[eWES/WTS]/[batch]/PL/
+done 
+```
 
 </details>
 
@@ -244,6 +261,20 @@ optional arguments:
 解析途中の検体があった場合は、操作の継続を聞かれるので選択する。\
 **継続する場合は、解析中の検体情報は記載されない**ので、全検体の解析が終了した後に再度実行してQC情報が確認できるようにしておく。\
 なお、再実行時した場合は work_sheet, sample_info 以外のシートは上書きされる。
+
+<details>
+  <summary> 
+    手作業で行う場合
+  </summary>
+
+### ワークシートにqc_infoシートを追加する
+BDeaver などでデータベースに接続し、テーブル gxd.gc_project, gxd.gc_history_log, gxd.tb_expr_seq_header, gxd.gc_qc_sample から flowcell ID に紐づいている検体情報を抽出してqc_infoシートを作成する。\
+または、OncoStationにアクセスし、各検体の Sample Detail ページに記載されているQC情報をまとめた一覧を qc_infoシートに記載する。
+
+### 検査コメントが必要な検体数を記載する
+qc_infoシートの内容を確認し、ワークシート項目7の「検査コメントが必要な検体数」に値を入力する
+
+</details>
 
 <a id="RM"></a>
 ## 4\. 解析結果の編集（削除）
@@ -370,7 +401,15 @@ optional arguments:
 |--directory/-d    |False    |解析フォルダの親ディレクトリへのパス  |/data1/data/result    |
 |--project_type/-t |False    |解析種別。both,eWES,WTSから選択する  |both                   |
 |--linkDir/-l      |False    |PDFレポートのリンク先ディレクトリへのパス|/data1/work/report |
+</details>
 
+<details>
+  <summary> 
+    手作業で行う場合
+  </summary>
+/data1/work/report/[eWES/WTS]/[batch]/OST を作成する。\
+BDeaver などでデータベースに接続し、テーブル gxd.gc_project, gxd.gc_history_log, gxd.tb_expr_seq_header, gxd.gc_qc_sample から flowcell ID に紐づいている検体情報を抽出して各検体の REPORT_URL を取得する。\
+/data1/OST/reports/[sample ID]/ の直下にある REPORT_URL と同じファイル名のpdfのシンボリックリンクを /data1/work/report/[eWES/WTS]/[batch]/OST/ に作成する。
 </details>
 
 

@@ -59,11 +59,11 @@ optional arguments:
      【eWES】/data1/data/result/eWES/\<batch_folder\>/\<ポジコンのSampleID\>/SNV/somatic/\<ポジコンのSampleID\>.target.snv.marked.tsv \
      【WTS】 /data1/data/result/WTS/\<batch_folder\>/\<ポジコンのSampleID\>/Fusion/Metafusion/final.n2.cluster.CANCER_FUSIONS \
      上記ファイルにも記載がない場合はGMに指示を仰ぐ
-  6. **[工程外手順]** [monitoring PRE](https://github.com/mkaba-gxd/monitoring?tab=readme-ov-file#7-prefilter) コマンドでフィルター前データの一覧を作成する\
+  6. **[工程外手順]** [monitoring preFilter](https://github.com/mkaba-gxd/monitoring?tab=readme-ov-file#7-prefilter) コマンドでフィルター前データの一覧を作成する\
       → /data1/work/monitoring/preFilter/\<batch_folder\> の下に [eWES/WTTS].*.xlsx が作成される
   7. **[工程外手順]** レビュー資料作成手順.pptx に従ってフィルター前データの一覧に情報を追記し、GMに送付する
-  8. **[工程外手順]** [monitoring AGG](https://github.com/mkaba-gxd/monitoring?tab=readme-ov-file#10aggregate) コマンドでBox用集計データを作成し、GMに送付する
-  9. **[工程外手順]** [monitoring ITM](https://github.com/mkaba-gxd/monitoring?tab=readme-ov-file#9intermediate) コマンドでSNV＆InDelの中間データ一覧を作成する \
+  8. **[工程外手順]** [monitoring aggregate](https://github.com/mkaba-gxd/monitoring?tab=readme-ov-file#10aggregate) コマンドでBox用集計データを作成し、GMに送付する
+  9. **[工程外手順]** [monitoring intermediate](https://github.com/mkaba-gxd/monitoring?tab=readme-ov-file#9intermediate) コマンドでSNV＆InDelの中間データ一覧を作成する \
       → /data1/work/monitoring/intermediate/[timestamp].3tools.xlsx が作成されるので、共有サーバーの以下の場所に格納する\
        \\\192.168.11.19\cap\教育資料\DRY\202507_IGV\ 
   10. ワークシートとqc_infoシートを印刷してTRFとともにファイルにまとめ、GMに渡す

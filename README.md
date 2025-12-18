@@ -137,9 +137,9 @@ usage: worksheet.py create [-h] --flowcellid FLOWCELLID [--directory DIRECTORY]
     手作業で行う場合
   </summary>
 
-templete フォルダに作業書のひな形が格納されているので、/data1/work/workSheet/ にコピーして加工する。\
-sample_info シートについては、BDeaver などでデータベースに接続し、テーブル gxd.tb_expr_seq_header, gxd.gc_qc_sample, gxd.gc_project, gxd.gc_history_log から flowcell ID に紐づいている検体情報を抽出して作成する。\
-すべての項目について抽出することが難しい場合は SAMPLE_ID,PATIENT_NO,CTRL の情報だけ記載する。
+- templete フォルダに作業書のひな形が格納されているので、/data1/work/workSheet/ にコピーして加工する。
+- sample_info シートについては、BDeaver などでデータベースに接続し、テーブル gxd.tb_expr_seq_header, gxd.gc_qc_sample, gxd.gc_project, gxd.gc_history_log から flowcell ID に紐づいている検体情報を抽出して作成する。
+- すべての項目について抽出することが難しい場合は SAMPLE_ID,PATIENT_NO,CTRL の情報だけ記載する。
 </details>
 
 <a id="CH"></a>
@@ -382,13 +382,13 @@ optional arguments:
   <summary> 
     手作業で行う場合
   </summary>
+  
 この工程は手作業でできなくもないですが、DBやSQLがよくわからない場合は無暗に行わず、開発チームまたはITチームに問い合わせてください。
-
 - 以下のファイルについて、ファイル名を変更する。\
 /data1/data/result/[eWES/WTS]/[batch]/[sampleID]/Summary/[sampleID].report.json ⇒ [sampleID].report.[timestamp].json \
 /data1/data/result/[eWES/WTS]/[batch]/[sampleID]/Summary/[sampleID].report.pdf ⇒ [sampleID].report.[timestamp].pdf 
 - BDeaver などでデータベースに接続し、当該検体の変異情報をすべて削除する。※修正した変異以外も削除すること
-  
+
 |解析種別 |修正対象テーブル    |
 |:--------|:-------------------|
 |eWES     |gc_alter_snv, gc_snv_indeterminate, gc_alter_cnv, gc_alter_msi, del_alt_tmb |
@@ -441,7 +441,8 @@ optional arguments:
   <summary> 
     手作業で行う場合
   </summary>
-
+  
+ツールの修正が難しい場合は OncoStation でPDFレポートをダウンロードして印刷するだけで良いです。\
 ① /data1/work/report/[eWES/WTS]/[batch]/OST を作成する。\
 ② BDeaver などでデータベースに接続し、テーブル gxd.gc_project, gxd.gc_history_log, gxd.tb_expr_seq_header, gxd.gc_qc_sample から flowcell ID に紐づいている検体情報を抽出して各検体の REPORT_URL を取得する。\
 ③ /data1/OST/reports/[sample ID]/ の直下にある REPORT_URL と同じファイル名のpdfのシンボリックリンクを①で作成したディレクトリに作成する。

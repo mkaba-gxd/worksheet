@@ -382,6 +382,7 @@ optional arguments:
   <summary> 
     手作業で行う場合
   </summary>
+この工程は手作業でできなくもないですが、DBやSQLがよくわからない場合は無暗に行わず、開発チームまたはITチームに問い合わせてください。
 
 - 以下のファイルについて、ファイル名を変更する。\
 /data1/data/result/[eWES/WTS]/[batch]/[sampleID]/Summary/[sampleID].report.json ⇒ [sampleID].report.[timestamp].json \
@@ -394,8 +395,8 @@ optional arguments:
 |WTS      |gc_alter_splice, gc_alter_sv, gc_alter_express |
 - BDeaver などでデータベースに接続し、テーブル gc_qc_bi に登録済の当該検体のQC情報をすべて削除する
 - BDeaver などでデータベースに接続し、修正対象の検体について、テーブル gxd.gc_history_log, gc_qc_sample の ANAL_STATUS の値を102から 100 または 101 に変更する。\
-※ANAL_STATUSを100にした場合は10分以内にcronによる解析再実行が行われる。101にした場合は手作業で report_json 工程を実行する。\
-※データベースの書き換えについては、**間違った場合のリカバリーが難しい**ため、ダブルチェックを実施する等、細心の注意を払うこと。
+※ ANAL_STATUSを100にした場合は10分以内にcronによる解析再実行が行われる。101にした場合は手作業で report_json 工程を実行する。\
+※ データベースの書き換えについては、**間違った場合のリカバリーが難しい**ため、ダブルチェックを実施する等、細心の注意を払うこと。
 </details>
 
 <a id="LNK"></a>

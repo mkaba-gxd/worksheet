@@ -61,14 +61,14 @@ optional arguments:
      上記ファイルにも記載がない場合はGMに指示を仰ぐ
   6. **[工程外手順]** [monitoring preFilter](https://github.com/mkaba-gxd/monitoring?tab=readme-ov-file#7-prefilter) コマンドでフィルター前データの一覧を作成する\
       → /data1/work/monitoring/preFilter/\<batch_folder\> の下に [eWES/WTS].*.xlsx が作成される
-  7. **[工程外手順]** レビュー資料作成手順.pptx に従ってフィルター前データの一覧に情報を追記し、共有フォルダの以下の場所に格納したらGMに完了報告を行う。\
-     \\\192.168.11.19\cap\移行済データ\変異確認ファイル\\[YYYYMMDD]
+  7. **[工程外手順]** レビュー資料作成手順.pptx に従ってフィルター前データの一覧に情報を追記し、共有フォルダの以下の場所に格納した後、GMに完了報告を行う。(ファイル作成時の日時でサブフォルダを作成する)\
+     \\\192.168.11.19\cap\移行済データ\変異確認ファイル\\[YYYYMMDD]\ 
   8. **[工程外手順]** [monitoring aggregate](https://github.com/mkaba-gxd/monitoring?tab=readme-ov-file#10aggregate) コマンドでBox用集計データを作成する。\
     → /data1/work/monitoring/aggregate/[timestamp].xlsx が作成されるので、共有サーバーの以下の場所に格納する\
-       \\\192.168.11.19\cap\教育資料\DRY\Box\ 
+       \\\192.168.11.19\cap\移行済データ\変異確認ファイル\01_Box\
   9. **[工程外手順]** [monitoring intermediate](https://github.com/mkaba-gxd/monitoring?tab=readme-ov-file#9intermediate) コマンドでSNV＆InDelの中間データ一覧を作成する \
       → /data1/work/monitoring/intermediate/[timestamp].3tools.xlsx が作成されるので、共有サーバーの以下の場所に格納する\
-       \\\192.168.11.19\cap\教育資料\DRY\202507_IGV\ 
+       \\\192.168.11.19\cap\移行済データ\変異確認ファイル\00_3tools\
   10. ワークシートとqc_infoシートを印刷してTRFとともにファイルにまとめ、GMに渡す
   11. レビュー終了後、GMからレポート修正の指示があった場合は以下の手順でレポート修正を行う\
      11-1. [解析結果の編集](#RM) ※ 解析完了時から当該作業時までにPipelineに変更があった場合は rerun.sh を作成する\

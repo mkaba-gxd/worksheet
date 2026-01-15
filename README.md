@@ -324,7 +324,7 @@ optional arguments:
 
 対話型プログラムなので、表示される内容に応じて編集する内容を入力する。\
 可能な編集は行削除（変異の削除）のみなので、解析結果内容の一部を修正する場合はsummaryファイルを**手作業で**編集してレポートの再作成を実施する。
-[手順はこちら](https://github.com/mkaba-gxd/special-case/blob/main/README.md#case6-解析結果の修正とレポートの再作成手作業)
+[手順はこちら](https://github.com/mkaba-gxd/workaround/blob/main/README.md#case7-解析結果の修正とレポートの再作成手作業)
 </details>
 
 <details>

@@ -14,9 +14,12 @@ CAP検査（eWES/WTS）DRY工程作業で使用するワークシートの新規
 |[link, LNK](#LNK)     |OncoStationで作成されたPDFレポートのリンクを作成する      |
 
 ## エイリアスの作成 ※初回のみ 
-~/bin フォルダ直下に以下のコマンドを記載したテキストファイル worksheet を作成し、実行権限を付与する。\
-（gxd_pipeline, guest_user ユーザーには実装済み）\
-エイリアスを作成しない場合は、singularity でコンテナとスクリプトファイルを指定して実行する。
+**gxd_pipeline, guest_user ユーザーには実装済みですので、実行しなくて良いです。**\
+~/bin フォルダ直下に以下のコマンドを記載したテキストファイル worksheet を作成し、実行権限を付与する。
+<details>
+  <summary> 
+    More Details
+  </summary>
 
 ```
 singularity exec --disable-cache --bind /data1 /data1/labTools/labTools.sif python /data1/labTools/worksheet/latest/worksheet.py $@
@@ -42,6 +45,10 @@ optional arguments:
   -h, --help            show this help message and exit
   --version, -v         show program's version number and exit
 ```
+エイリアスを作成しない場合は、singularity でコンテナとスクリプトファイルを指定して実行する。
+
+</details>
+
 ## 0\. DRY工程の手順
 <details>
   <summary> 
@@ -263,7 +270,7 @@ optional arguments:
 
 解析途中の検体があった場合は、操作の継続を聞かれるので選択する。\
 **継続する場合は、解析中の検体情報は記載されない**ので、全検体の解析が終了した後に再度実行してQC情報が確認できるようにしておく。\
-なお、再実行時した場合は work_sheet, sample_info 以外のシートは上書きされる。
+なお、再実行時した場合は work_sheet, sample_info 以外のシートは最新の情報で上書きされる。
 
 <details>
   <summary> 
